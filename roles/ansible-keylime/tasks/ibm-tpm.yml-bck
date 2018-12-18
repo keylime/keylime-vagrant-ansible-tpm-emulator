@@ -1,0 +1,47 @@
+- name: Build tpm-server
+  become: yes
+  command: make -f ./makefile-tpm
+  args:
+    chdir: /home/keylime/tpm4720-keylime/tpm
+
+- name: install tpm_server
+  become: yes
+  command: install -c tpm_server /usr/local/bin/tpm_server
+  args:
+    chdir: /home/keylime/tpm4720-keylime/tpm
+
+- name: Run ibm-tpm autogen
+  become: yes
+  command: sh ./autogen
+  args:
+    chdir: /home/keylime/tpm4720-keylime/libtpm
+
+- name: Configure ibm-tpm
+  become: yes
+  command: ./configure
+  args:
+    chdir: /home/keylime/tpm4720-keylime/libtpm
+
+- name: Build ibm-tpm
+  become: yes
+  make:
+    chdir: /home/keylime/tpm4720-keylime/libtpm
+
+- name: install tpmbios
+  become: yes
+  command: install -c tpmbios /usr/local/bin/tpmbios
+  args:
+    chdir: /home/keylime/tpm4720-keylime/libtpm/utils/
+
+- name: install tpm_serverd
+  become: yes
+  command: install -c tpm_serverd /usr/local/bin/tpm_serverd
+  args:
+    chdir: /home/keylime/tpm4720-keylime/scripts
+
+- name: install init_tpm_server
+  become: yes
+  command: install -c init_tpm_server /usr/local/bin/init_tpm_server
+  args:
+    chdir: /home/keylime/tpm4720-keylime/scripts
+

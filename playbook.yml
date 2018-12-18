@@ -1,0 +1,8 @@
+---
+- hosts: all
+  remote_user: root
+  pre_tasks:
+    - name: 'install python2'
+      raw: sudo dnf -y install python
+  roles:
+    - ansible-keylime

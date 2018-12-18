@@ -1,0 +1,7 @@
+---
+# tasks file for opencit-ansible
+- include: users.yml
+- include: packages.yml
+- include: git-repos.yml
+- include: ibm-tpm.yml
+#- include: tpm2-software-build.yml

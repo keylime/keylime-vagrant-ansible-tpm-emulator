@@ -1,0 +1,15 @@
+- name: Ensure group "keylime" exists
+  become: yes
+  group:
+    name: keylime
+    state: present
+
+- name: Add the user 'keylime' with a specific uid and a primary group of 'keylime'
+  become: yes
+  user:
+    name: keylime
+    comment: Keylime User
+    group: keylime
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
