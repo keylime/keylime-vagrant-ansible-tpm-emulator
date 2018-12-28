@@ -51,3 +51,9 @@
   package:
     name: redhat-rpm-config
     state: latest
+
+- name: libselinux-python
+  become: yes
+  package:
+    name: libselinux-python
+    state: latest

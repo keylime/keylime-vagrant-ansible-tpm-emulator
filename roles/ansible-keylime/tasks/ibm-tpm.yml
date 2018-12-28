@@ -2,4 +2,4 @@
   become: yes
   command: sh ./install-fedora-28.sh
   args:
-    chdir: /home/keylime/tpm4720-keylime/scripts
+    chdir: /root/tpm4720-keylime/scripts

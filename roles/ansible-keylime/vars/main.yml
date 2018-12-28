@@ -1,2 +1,4 @@
 ---
 # section for vars
+shell_profiles:
+- .bash_profile
