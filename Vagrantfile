@@ -7,6 +7,7 @@ Vagrant.configure("2") do |config|
      vb.cpus = "2"
    end
    config.vm.provision "ansible_local" do |ansible|
+       ansible.galaxy_role_file = 'requirements.yml'
        ansible.playbook = "playbook.yml"
   end
 end
