@@ -18,7 +18,17 @@ python based cloud node `keylime_node`
 Usage
 -----
 
-Clone the repository and then simply run `vargant up --provider <provider> --provision`
+Run the example playbook against your target remote node(s).
+
+```
+ansible-playbook -i your_hosts playbook.yml
+```
+
+#### Vagrant
+
+If you prefer, a Vagrantfile is available for provisioning.
+
+Clone the repository and then simply run `vagrant up --provider <provider> --provision`
 
 For example, using libvirt:
 
@@ -32,7 +42,7 @@ For example, using VirtualBox:
 vagrant up --provider virtualbox --provision
 ```
 
-Once the VM is started, vagrant ssh into the VM and run `sudo su -`` to
+Once the VM is started, vagrant ssh into the VM and run `sudo su - to
 become root.
 
 You can then start the various components using commands:
