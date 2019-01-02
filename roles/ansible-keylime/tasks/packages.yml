@@ -6,44 +6,44 @@
 - name: install openssl-devel
   package:
     name: openssl-devel
-    state: latest
+    state: present
 
 - name: install libtool
   package:
     name: libtool
-    state: latest
+    state: present
 
 - name: install python-devel
   package:
     name: python2-devel
-    state: latest
+    state: present
 
 - name: install python-setuptools
   package:
     name: python2-setuptools
-    state: latest
+    state: present
 
 - name: install python2-tornado
   package:
     name: python-tornado
-    state: latest
+    state: present
 
 - name: install m2crypto
   package:
     name: m2crypto
-    state: latest
+    state: present
 
 - name: install python2-zmq
   package:
     name: python-zmq
-    state: latest
+    state: present
 
 - name: install redhat-rpm-config
   package:
     name: redhat-rpm-config
-    state: latest
+    state: present
 
 - name: libselinux-python
   package:
     name: libselinux-python
-    state: latest
+    state: present

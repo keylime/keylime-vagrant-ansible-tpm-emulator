@@ -1,7 +1,7 @@
 galaxy_info:
   author: Luke Hinds
   description: Ansible Keylime
-  company: your company (optional)
+  company: Red Hat
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
@@ -32,10 +32,10 @@ galaxy_info:
   #
   # platforms is a list of platforms, and each platform has a name and a list of versions.
   #
-  # platforms:
-  # - name: Fedora
-  #   versions:
-  #   - all
+  platforms:
+    - name: Fedora
+      versions:
+        - 28
   #   - 25
   # - name: SomePlatform
   #   versions:
