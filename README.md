@@ -5,8 +5,10 @@ Ansible Keylime
 
 ##### *Note: This playbook is still under early Development.*
 
-Ansible role to deploy [MIT's Python Keylime](https://github.com/mit-ll/python-keylime)
-and the [Keylime rust cloud node](https://github.com/redhat-university-partnerships/keylime) on Fedora release 28.
+Ansible role to deploy [MIT's Python Keylime](https://github.com/mit-ll/python-keylime),
+it's [IBM emulator port](https://github.com/mit-ll/tpm4720-keylime)
+and the [Keylime rust cloud node](https://github.com/redhat-university-partnerships/keylime)
+on Fedora release 28 (at present, plans to extend).
 
 For details on using Python Keylime, please consult the
 [project documentation](https://github.com/mit-ll/python-keylime/blob/master/README.md)
