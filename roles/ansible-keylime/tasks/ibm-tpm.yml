@@ -1,5 +1,4 @@
 - name: Build tpm-server
-  become: yes
   command: sh ./install-fedora-28.sh
   args:
     chdir: /root/tpm4720-keylime/scripts

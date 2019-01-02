@@ -2,58 +2,48 @@
   yum:
     name: "@Development tools"
     state: present
-  become: yes
 
 - name: install openssl-devel
-  become: yes
   package:
     name: openssl-devel
     state: latest
 
 - name: install libtool
-  become: yes
   package:
     name: libtool
     state: latest
 
 - name: install python-devel
-  become: yes
   package:
     name: python2-devel
     state: latest
 
 - name: install python-setuptools
-  become: yes
   package:
     name: python2-setuptools
     state: latest
 
 - name: install python2-tornado
-  become: yes
   package:
     name: python-tornado
     state: latest
 
 - name: install m2crypto
-  become: yes
   package:
     name: m2crypto
     state: latest
 
 - name: install python2-zmq
-  become: yes
   package:
     name: python-zmq
     state: latest
 
 - name: install redhat-rpm-config
-  become: yes
   package:
     name: redhat-rpm-config
     state: latest
 
 - name: libselinux-python
-  become: yes
   package:
     name: libselinux-python
     state: latest

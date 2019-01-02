@@ -1,5 +1,4 @@
 - name: Run python setup tools to install Keylime
-  become: yes
   shell: "/usr/bin/python2.7 setup.py install"
   args:
     chdir: /root/python-keylime
