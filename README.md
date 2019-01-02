@@ -1,6 +1,8 @@
 Ansible Keylime
 ===============
 
+[![Build Status](https://travis-ci.org/lukehinds/ansible-keylime.svg?branch=master)](https://travis-ci.org/lukehinds/ansible-keylime)
+
 ##### *Note: This playbook is still under early Development.*
 
 Ansible role to deploy [MIT's Python Keylime](https://github.com/mit-ll/python-keylime)

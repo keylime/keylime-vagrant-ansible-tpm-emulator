@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: true
+  pre_tasks:
+    - name: 'install python2'
+      raw: sudo dnf -y install python
+    - name: 'install libselinux-python'
+      raw: sudo dnf -y install libselinux-python
+  roles:
+    - fubarhouse.rust
+    - ansible-keylime
