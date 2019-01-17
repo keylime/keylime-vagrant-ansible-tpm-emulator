@@ -1,7 +1,7 @@
 Ansible Keylime
 ===============
 
-[![Build Status](https://travis-ci.org/lukehinds/ansible-keylime.svg?branch=master)](https://travis-ci.org/lukehinds/ansible-keylime)
+[![Build Status](https://travis-ci.org/keylime/ansible-keylime.svg?branch=master)](https://travis-ci.org/keylime/ansible-keylime)
 
 ##### *Note: This playbook is still under early Development.*
 
