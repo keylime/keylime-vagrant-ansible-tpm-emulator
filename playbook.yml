@@ -8,4 +8,4 @@
       raw: sudo dnf -y install libselinux-python
   roles:
     - fubarhouse.rust
-    - ansible-keylime
+    - ansible-keylime-tpm20
