@@ -55,6 +55,25 @@ keylime_registrar
 keylime_node
 ```
 
+#### TPM Version Control
+
+Either TPM version 1.2 or TPM 2.0 support can be configured by simply changing the role in the `playbook.yml` file [here](https://github.com/keylime/ansible-keylime/blob/master/playbook.yml#L11).
+
+For TPM 2.0 use:
+
+```
+  - ansible-keylime-tpm20
+``` 
+
+For TPM 1.20 use:
+
+```
+  - ansible-keylime-tpm12
+``` 
+
+Both roles will deploy the relevant TPM 1.2 Emulator (tpm4720) or 2.0 Emulator (IBM software TPM).
+
+
 WebApp
 ------
 

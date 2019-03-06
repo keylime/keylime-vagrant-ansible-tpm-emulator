@@ -1,0 +1,12 @@
+- name:  Unarchive downloaded tpm archive folder
+  unarchive:
+      src: /root/ibmtpm/ibmtpm1119.tar.gz
+      dest: /root/ibmtpm/ 
+
+- name: Compile software tpm
+  make:
+      chdir: /root/ibmtpm/src/
+
+- name: Install software tpm server
+  command: install -c /root/ibmtpm/src/tpm_server /usr/local/bin/tpm_server
+  become: yes

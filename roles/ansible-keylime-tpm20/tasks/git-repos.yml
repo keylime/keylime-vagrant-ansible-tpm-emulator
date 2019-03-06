@@ -1,0 +1,37 @@
+- name: Clone python-keylime
+  git:
+    repo: https://github.com/keylime/python-keylime
+    dest: /root/python-keylime
+
+- name: Clone tpm2 software stack
+  git:
+    repo: https://github.com/tpm2-software/tpm2-tss
+    dest: /root/tpm2-tss
+    version: "{{ tpm2_tss_version }}" 
+
+- name: Clone tpm2 tools
+  git:
+    repo: https://github.com/keylime/tpm2-tools
+    dest: /root/tpm2-tools
+    version: "{{ tpm2_tools_version }}"
+
+- name: Clone tpm2 resource manager
+  git:
+    repo: https://github.com/tpm2-software/tpm2-abrmd
+    dest: /root/tpm2-abrmd
+    version: "{{ tpm2_abrmd_version }}"
+
+- name: crate ibmtp directory
+  file:
+    path: /root/ibmtpm
+    state: directory
+
+- name: Download IBM software TPM2
+  get_url:
+    url: http://sourceforge.net/projects/ibmswtpm2/files/ibmtpm1119.tar.gz
+    dest: /root/ibmtpm
+
+- name: Clone rust-keylime
+  git:
+    repo: https://github.com/redhat-university-partnerships/keylime
+    dest: /root/rust-keylime

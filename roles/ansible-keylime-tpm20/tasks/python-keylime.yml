@@ -1,0 +1,16 @@
+- name: remove openssl-devel package installation in the install.sh script
+  lineinfile:
+      dest: /root/python-keylime/installer.sh
+      regexp: 'openssl-devel'
+      line: '    BUILD_TOOLS="libtool make automake pkg-config m4 libgcrypt-devel autoconf autoconf-archive libcurl-devel libstdc++-devel uriparser-devel dbus-devel gnulib-devel python2-pyyaml doxygen"'
+
+- name: remove openssl-devel package installation in the install.sh script
+  lineinfile:
+      dest: /root/python-keylime/installer.sh
+      regexp: 'openssl-devel'
+      line: '    PYTHON_DEPS="python2-pip gcc gcc-c++ swig"' 
+
+- name: Run python setup tools to install Keylime
+  command: ./installer.sh -smo
+  args:
+    chdir: /root/python-keylime
