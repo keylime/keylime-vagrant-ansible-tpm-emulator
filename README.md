@@ -1,14 +1,14 @@
 Ansible Keylime
 ===============
 
-[![Build Status](https://travis-ci.org/keylime/ansible-keylime.svg?branch=master)](https://travis-ci.org/keylime/ansible-keylime) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/keylime-project/community)
+[![Build Status](https://travis-ci.org/keylime/ansible-keylime-soft-tpm.svg?branch=master)](https://travis-ci.org/keylime/ansible-keylime-soft-tpm) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/keylime-project/community)
 
 Ansible role to deploy [Python Keylime](https://github.com/keylime/python-keylime) and a TPM Emulator,
 alongside the  [Keylime rust cloud node](https://github.com/keylime/rust-keylime)
 on Fedora release 29.
 
 For details on using Keylime, please consult the
-[project documentation](https://github.com/keylime/python-keylime/blob/master/README.md)
+[project documentation](http://keylime-docs.rtfd.io/)
 
 Please note that the rust cloud node is still under early stages of Development.
 Those wishing to test drive keylimes functionality should use the existing
