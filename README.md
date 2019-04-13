@@ -14,6 +14,15 @@ Please note that the rust cloud node is still under early stages of Development.
 Those wishing to test drive keylimes functionality should use the existing
 python based cloud node `keylime_node` until later notice.
 
+Secutrity Warning
+-----------------
+
+This role deploys with a software TPM Emulator.
+
+Do not use a software TPM emulator in a production environment.
+
+This role is solely for the use of developement or demonstration purposes.
+
 Usage
 -----
 
