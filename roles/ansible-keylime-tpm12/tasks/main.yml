@@ -4,5 +4,5 @@
 - include: packages.yml
 - include: git-repos.yml
 - include: ibm-tpm.yml
-- include: python-keylime.yml
+- include: keylime.yml
 - include: rust-keylime.yml
