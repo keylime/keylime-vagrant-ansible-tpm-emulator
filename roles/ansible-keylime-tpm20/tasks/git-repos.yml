@@ -1,13 +1,13 @@
-- name: Clone python-keylime
+- name: Clone keylime
   git:
-    repo: https://github.com/keylime/python-keylime
-    dest: /root/python-keylime
+    repo: https://github.com/keylime/keylime
+    dest: /root/keylime
 
 - name: Clone tpm2 software stack
   git:
     repo: https://github.com/tpm2-software/tpm2-tss
     dest: /root/tpm2-tss
-    version: "{{ tpm2_tss_version }}" 
+    version: "{{ tpm2_tss_version }}"
 
 - name: Clone tpm2 tools
   git:
