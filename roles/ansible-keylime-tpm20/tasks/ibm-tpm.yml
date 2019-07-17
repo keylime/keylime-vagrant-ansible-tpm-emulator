@@ -1,12 +1,23 @@
+- name: create ibmtp directory
+  file:
+    path: /root/ibmtpm
+    state: directory
+
+- name: Download TPM2 Emulator
+  get_url:
+    url: http://sourceforge.net/projects/ibmswtpm2/files/ibmtpm1119.tar.gz
+    dest: /root/ibmtpm
+
 - name:  Unarchive downloaded tpm archive folder
   unarchive:
       src: /root/ibmtpm/ibmtpm1119.tar.gz
-      dest: /root/ibmtpm/ 
+      dest: /root/ibmtpm/
+      remote_src: yes
 
 - name: Compile software tpm
   make:
       chdir: /root/ibmtpm/src/
 
 - name: Install software tpm server
-  command: install -c /root/ibmtpm/src/tpm_server /usr/local/bin/tpm_server
+  command: /usr/bin/install -c /root/ibmtpm/src/tpm_server /usr/local/bin/tpm_server
   become: yes

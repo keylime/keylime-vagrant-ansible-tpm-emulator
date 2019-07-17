@@ -7,5 +7,4 @@
     - name: 'install libselinux-python'
       raw: sudo dnf -y install libselinux-python
   roles:
-    - fubarhouse.rust
     - ansible-keylime

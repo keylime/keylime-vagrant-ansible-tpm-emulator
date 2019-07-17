@@ -1,8 +1,12 @@
 ---
-# tasks file for opencit-ansible
+# This is required as off
+- name: Disable SELinux
+  selinux:
+    policy: targeted
+    state: permissive
+
+# tasks file for anisble-keylime
 - include: packages.yml
-- include: git-repos.yml
-- include: tpm2-software.yml
 - include: ibm-tpm.yml
-- include: python-keylime.yml
-- include: rust-keylime.yml
+- include: keylime.yml
+- include: configure-emulator.yml

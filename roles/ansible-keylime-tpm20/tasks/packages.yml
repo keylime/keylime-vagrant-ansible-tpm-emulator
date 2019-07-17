@@ -77,3 +77,29 @@
   dnf:
       name: PyYAML
       state: latest
+
+- name: install redhat-rpm-config
+  dnf:
+      name: redhat-rpm-config
+      state: latest
+
+- name: install python2-devel
+  dnf:
+      name: python2-devel
+      state: latest
+
+
+- name: install tpm2-tools
+  dnf:
+      name: tpm2-tools
+      state: latest
+
+- name: install tpm2-tss
+  dnf:
+      name: tpm2-tss
+      state: latest
+
+- name: install tpm2-abrmd
+  dnf:
+      name: tpm2-abrmd
+      state: latest

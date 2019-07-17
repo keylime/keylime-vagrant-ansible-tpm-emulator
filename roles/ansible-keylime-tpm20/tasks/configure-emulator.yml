@@ -1,0 +1,28 @@
+- name: Install the tpm_serverd script
+  command: /usr/bin/install -c swtpm2_scripts/tpm_serverd /usr/local/bin/tpm_serverd
+  args:
+    chdir: /root/keylime/
+
+- name: Install the init_tpm_server script
+  command: /usr/bin/install -c swtpm2_scripts/init_tpm_server /usr/local/bin/init_tpm_server
+  args:
+    chdir: /root/keylime/
+
+- name: Run the emulator
+  command: /usr/local/bin/tpm_serverd
+
+- name: Add TPM2TOOLS_TCTI in bashrc files
+  lineinfile: dest=/root/.bashrc line='export TPM2TOOLS_TCTI=\"tabrmd:bus_name=com.intel.tss2.Tabrmd\"' insertafter='EOF' regexp='^TPM2TOOLS_TCTI' state=present
+
+- name: Enable tpm2-abrmd systemd service
+  command: systemctl enable tpm2-abrmd
+
+- name: Amend tpm2-abrmd systemd service
+  command: sed -i 's/.*ExecStart.*/ExecStart=\/usr\/sbin\/tpm2-abrmd --tcti=mssim/' /usr/lib/systemd/system/tpm2-abrmd.service
+
+- name: reload tpm2-abrmd systemd service
+  command: systemctl daemon-reload
+
+- name: start tpm2-abrmd systemd service
+  command: systemctl start tpm2-abrmd
+
