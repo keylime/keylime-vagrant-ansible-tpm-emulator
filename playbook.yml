@@ -2,10 +2,10 @@
 - hosts: all
   become: true
   pre_tasks:
-    - name: 'install python2'
-      raw: sudo dnf -y install python
-    - name: 'install libselinux-python'
-      raw: sudo dnf -y install libselinux-python
+    - name: 'install python3'
+      raw: sudo dnf -y install python3
+    - name: 'install libselinux-python3'
+      raw: sudo dnf -y install libselinux-python3
   roles:
     - fubarhouse.rust
     - ansible-keylime-tpm20
