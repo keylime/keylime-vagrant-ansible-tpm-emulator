@@ -8,7 +8,7 @@
   lineinfile:
       dest: /root/keylime/installer.sh
       regexp: 'openssl-devel'
-      line: '    PYTHON_DEPS="python2-pip gcc gcc-c++ swig"'
+      line: '    PYTHON_DEPS="python3-pip gcc gcc-c++ swig"'
 
 - name: Run python setup tools to install Keylime
   command: ./installer.sh -smo

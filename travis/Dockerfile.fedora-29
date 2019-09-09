@@ -14,7 +14,7 @@ rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 RUN dnf -y install python3 python3-pip libffi-devel redhat-rpm-config python3-devel openssl-devel sudo git @development-tools
 
-RUN pip install ansible
+RUN pip3 install ansible
 
 RUN sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers
 
