@@ -1,7 +1,7 @@
 - name:  Unarchive downloaded tpm archive folder
   unarchive:
       src: /root/ibmtpm/ibmtpm1119.tar.gz
-      dest: /root/ibmtpm/ 
+      dest: /root/ibmtpm/
 
 - name: Compile software tpm
   make:

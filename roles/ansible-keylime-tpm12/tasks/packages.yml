@@ -13,19 +13,19 @@
     name: libtool
     state: present
 
-- name: install python-devel
+- name: install python3-devel
   package:
-    name: python2-devel
+    name: python3-devel
     state: present
 
-- name: install python-setuptools
+- name: install python3-setuptools
   package:
-    name: python2-setuptools
+    name: python3-setuptools
     state: present
 
-- name: install python2-tornado
+- name: install python3-tornado
   package:
-    name: python-tornado
+    name: python3-tornado
     state: present
 
 - name: install m2crypto
@@ -33,9 +33,9 @@
     name: m2crypto
     state: present
 
-- name: install python2-zmq
+- name: install python3-zmq
   package:
-    name: python-zmq
+    name: python3-zmq
     state: present
 
 - name: install redhat-rpm-config
@@ -43,7 +43,7 @@
     name: redhat-rpm-config
     state: present
 
-- name: libselinux-python
+- name: libselinux-python3
   package:
-    name: libselinux-python
+    name: libselinux-python3
     state: present
