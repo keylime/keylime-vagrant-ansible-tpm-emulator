@@ -3,9 +3,9 @@ sudo: required
 
 env:
   - distribution: fedora
-    version: 29
+    version: 30
   - distribution: fedora
-    version: 28
+    version: 29
 
 services:
   - docker
