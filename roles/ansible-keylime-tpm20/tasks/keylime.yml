@@ -1,16 +1,11 @@
-- name: remove openssl-devel package installation in the install.sh script
-  lineinfile:
-      dest: /root/keylime/installer.sh
-      regexp: 'openssl-devel'
-      line: '    BUILD_TOOLS="libtool make automake pkg-config m4 libgcrypt-devel autoconf autoconf-archive libcurl-devel libstdc++-devel uriparser-devel dbus-devel gnulib-devel python3-pyyaml doxygen"'
-
-- name: remove openssl-devel package installation in the install.sh script
-  lineinfile:
-      dest: /root/keylime/installer.sh
-      regexp: 'openssl-devel'
-      line: '    PYTHON_DEPS="python3-pip gcc gcc-c++ swig"'
-
 - name: Run python setup tools to install Keylime
-  command: ./installer.sh -smo
+  shell: "/usr/bin/python3 setup.py install"
   args:
-    chdir: /root/keylime
+    chdir: /root/python-keylime
+
+- name: Move keylime.conf into default location
+  copy:
+    src: /root/python-keylime/keylime.conf
+    dest: /etc
+    mode: 0644
+    remote_src: yes

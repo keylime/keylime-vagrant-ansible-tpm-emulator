@@ -1,5 +1,5 @@
 - name: Run python setup tools to install Keylime
-  shell: "/usr/bin/python3.7 setup.py install"
+  shell: "/usr/bin/python3 setup.py install"
   args:
     chdir: /root/python-keylime
 
