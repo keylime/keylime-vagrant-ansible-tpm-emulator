@@ -1,4 +1,4 @@
-FROM fedora:28
+FROM fedora:29
 
 RUN dnf -y update
 
@@ -12,9 +12,9 @@ rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
 rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*;
 
-RUN dnf -y install python2 python-pip libffi-devel redhat-rpm-config python-devel openssl-devel sudo git @development-tools
+RUN dnf -y install python3 python3-pip libffi-devel redhat-rpm-config python3-devel openssl-devel sudo git @development-tools
 
-RUN pip install ansible
+RUN pip3 install ansible
 
 RUN sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers
 

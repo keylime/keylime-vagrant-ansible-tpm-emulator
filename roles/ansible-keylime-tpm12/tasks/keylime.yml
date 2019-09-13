@@ -1,11 +1,11 @@
 - name: Run python setup tools to install Keylime
-  shell: "/usr/bin/python2.7 setup.py install"
+  shell: "/usr/bin/python3 setup.py install"
   args:
-    chdir: /root/keylime
+    chdir: /root/python-keylime
 
 - name: Move keylime.conf into default location
   copy:
-    src: /root/keylime/keylime.conf
+    src: /root/python-keylime/keylime.conf
     dest: /etc
     mode: 0644
     remote_src: yes

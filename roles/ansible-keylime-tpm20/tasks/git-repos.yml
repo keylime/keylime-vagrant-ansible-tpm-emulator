@@ -3,24 +3,6 @@
     repo: https://github.com/keylime/keylime
     dest: /root/keylime
 
-- name: Clone tpm2 software stack
-  git:
-    repo: https://github.com/tpm2-software/tpm2-tss
-    dest: /root/tpm2-tss
-    version: "{{ tpm2_tss_version }}"
-
-- name: Clone tpm2 tools
-  git:
-    repo: https://github.com/keylime/tpm2-tools
-    dest: /root/tpm2-tools
-    version: "{{ tpm2_tools_version }}"
-
-- name: Clone tpm2 resource manager
-  git:
-    repo: https://github.com/tpm2-software/tpm2-abrmd
-    dest: /root/tpm2-abrmd
-    version: "{{ tpm2_abrmd_version }}"
-
 - name: crate ibmtp directory
   file:
     path: /root/ibmtpm
@@ -33,5 +15,5 @@
 
 - name: Clone rust-keylime
   git:
-    repo: https://github.com/redhat-university-partnerships/keylime
+    repo: https://github.com/keylime/rust-keylime
     dest: /root/rust-keylime

@@ -1,14 +1,14 @@
 - name: Clone keylime
   git:
-    repo: https://github.com/mit-ll/keylime
-    dest: /root/keylime
+    repo: https://github.com/keylime/keylime
+    dest: /root/python-keylime
 
 - name: Clone tpm4720-keylime
   git:
-    repo: https://github.com/mit-ll/tpm4720-keylime
+    repo: https://github.com/keylime/tpm4720-keylime
     dest: /root/tpm4720-keylime
 
 - name: Clone rust-keylime
   git:
-    repo: https://github.com/redhat-university-partnerships/keylime
+    repo: https://github.com/keylime/rust-keylime
     dest: /root/rust-keylime
