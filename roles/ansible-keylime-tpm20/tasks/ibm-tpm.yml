@@ -2,6 +2,7 @@
   unarchive:
       src: /root/ibmtpm/ibmtpm1119.tar.gz
       dest: /root/ibmtpm/
+      remote_src: yes
 
 - name: Compile software tpm
   make:

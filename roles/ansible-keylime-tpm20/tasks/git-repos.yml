@@ -1,7 +1,7 @@
 - name: Clone keylime
   git:
     repo: https://github.com/keylime/keylime
-    dest: /root/keylime
+    dest: /root/python-keylime
 
 - name: crate ibmtp directory
   file:
