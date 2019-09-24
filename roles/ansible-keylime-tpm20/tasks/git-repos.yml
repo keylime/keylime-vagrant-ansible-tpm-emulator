@@ -2,18 +2,3 @@
   git:
     repo: https://github.com/keylime/keylime
     dest: /root/keylime
-
-- name: crate ibmtp directory
-  file:
-    path: /root/ibmtpm
-    state: directory
-
-- name: Download IBM software TPM2
-  get_url:
-    url: http://sourceforge.net/projects/ibmswtpm2/files/ibmtpm1119.tar.gz
-    dest: /root/ibmtpm
-
-- name: Clone rust-keylime
-  git:
-    repo: https://github.com/keylime/rust-keylime
-    dest: /root/rust-keylime

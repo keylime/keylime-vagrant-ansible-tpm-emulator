@@ -5,4 +5,3 @@
 - include: git-repos.yml
 - include: ibm-tpm.yml
 - include: keylime.yml
-- include: rust-keylime.yml
