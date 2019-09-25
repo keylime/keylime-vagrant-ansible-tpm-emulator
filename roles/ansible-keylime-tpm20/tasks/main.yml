@@ -2,6 +2,5 @@
 # tasks file for opencit-ansible
 - include: packages.yml
 - include: git-repos.yml
-- include: ibm-tpm.yml
 - include: keylime.yml
-- include: rust-keylime.yml
+- include: ibm-tpm.yml

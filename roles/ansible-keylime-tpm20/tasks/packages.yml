@@ -73,9 +73,49 @@
       name: libcurl-devel
       state: latest
 
+- name: install python3-pip
+  dnf:
+      name: python3-pip
+      state: latest
+
 - name: install PyYAML
   dnf:
-      name: python3-yaml
+      name: python3-pyyaml
+      state: latest
+
+- name: install python3-m2crypto
+  dnf:
+      name: python3-m2crypto
+      state: latest
+
+- name: install python3-tornado
+  dnf:
+      name: python3-tornado
+      state: latest
+
+- name: install python3-simplejson
+  dnf:
+      name: python3-simplejson
+      state: latest
+
+- name: install python3-requests
+  dnf:
+      name: python3-requests
+      state: latest
+
+- name: Install libselinux-python
+  dnf:
+    name: libselinux-python
+    state: latest
+
+- name: install yaml-cpp-devel
+  dnf:
+      name: yaml-cpp-devel
+      state: latest
+
+- name: install procps-ng
+  dnf:
+      name: procps-ng
       state: latest
 
 - name: install tpm2-tss

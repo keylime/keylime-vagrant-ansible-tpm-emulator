@@ -1,4 +1,0 @@
-- name: Install rust client
-  command: /root/.cargo/bin/cargo build
-  args:
-    chdir: /root/rust-keylime

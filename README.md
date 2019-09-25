@@ -5,23 +5,25 @@ Ansible Keylime
 
 Ansible role to deploy [Keylime](https://github.com/keylime/keylime) and a TPM Emulator,
 alongside the  [Keylime rust cloud node](https://github.com/keylime/rust-keylime)
-on Fedora release 29.
+on Fedora release 31.
 
 For details on using Keylime, please consult the
 [project documentation](http://keylime-docs.rtfd.io/)
 
 Please note that the rust cloud node is still under early stages of Development.
-Those wishing to test drive keylimes functionality should use the existing
+Those wishing to test drive Keylimes functionality should use the existing
 python based cloud node `keylime_node` until later notice.
 
-Secutrity Warning
+Security Warning
 -----------------
 
 This role deploys with a software TPM Emulator.
 
 Do not use a software TPM emulator in a production environment.
 
-This role is solely for the use of developement or demonstration purposes.
+SELinux is set to permissive for this role.
+
+This role is solely for the use of development or demonstration purposes.
 
 Usage
 -----
@@ -70,14 +72,18 @@ For example, using VirtualBox:
 vagrant up --provider virtualbox --provision
 ```
 
-Once the VM is started, vagrant ssh into the VM and run `sudo su - to
+Once the VM is started, vagrant ssh into the VM and run `sudo su -` to
 become root.
+
+The TPM emulator will be running.
 
 You can then start the various components using commands:
 
 ```
 keylime_verifier
+
 keylime_registrar
+
 keylime_node
 ```
 
@@ -90,20 +96,6 @@ Vagrant, port 443 will be forwarded from the guest to port 8443 on the host.
 This will result in the web application being available on url:
 
 https://localhost:8443/webapp/
-
-Rust Cloud node
----------------
-
-To start the rust cloud node, navigate to it's repository directory and use
-cargo to run:
-
-```
-[root@localhost rust-keylime]# RUST_LOG=keylime_node=trace cargo run
-    Finished dev [unoptimized + debuginfo] target(s) in 0.28s
-     Running `target/debug/keylime_node`
- INFO  keylime_node > Starting server...
- INFO  keylime_node > Listening on http://127.0.0.1:1337
-```
 
 License
 -------

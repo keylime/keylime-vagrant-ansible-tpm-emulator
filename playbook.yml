@@ -2,10 +2,13 @@
 - hosts: all
   become: true
   pre_tasks:
+    - name: Put SELinux in permissive mode, logging actions that would be blocked.
+      selinux:
+        policy: targeted
+        state: permissive
     - name: 'install python3'
       raw: sudo dnf -y install python3
     - name: 'install libselinux-python3'
       raw: sudo dnf -y install libselinux-python3
   roles:
-    - fubarhouse.rust
     - ansible-keylime-tpm20
