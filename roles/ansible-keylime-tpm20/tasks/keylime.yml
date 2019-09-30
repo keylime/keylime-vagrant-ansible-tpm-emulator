@@ -13,11 +13,11 @@
 - name: Change require_ek_cert to false.
   lineinfile:
     path: /etc/keylime.conf
-    regexp: '^require_ek_cert='
+    regexp: '^require_ek_cert'
     line: require_ek_cert = False
 
 - name: Change ca_implementation to openssl.
   lineinfile:
     path: /etc/keylime.conf
-    regexp: '^ca_implementation='
+    regexp: '^ca_implementation'
     line: ca_implementation = openssl
