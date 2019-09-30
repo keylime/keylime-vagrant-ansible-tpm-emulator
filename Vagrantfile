@@ -1,10 +1,10 @@
 Vagrant.configure("2") do |config|
    config.vm.box = "fedora/30-cloud-base"
-   config.vm.network "forwarded_port", guest: 443, host: 8443
+   config.vm.synced_folder "/home/luke/repos/keylime/keylime", "/root/keylime-dev", type: "sshfs"
    config.vm.provider "libvirt" do |vb|
      vb.random :model => 'random'
-     vb.memory = "2048"
-     vb.cpus = "2"
+     vb.memory = "4096"
+     vb.cpus = "4"
    end
    config.vm.provision "ansible_local" do |ansible|
        ansible.playbook = "playbook.yml"
