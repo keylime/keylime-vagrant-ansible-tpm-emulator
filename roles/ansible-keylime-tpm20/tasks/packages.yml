@@ -103,9 +103,9 @@
       name: python3-requests
       state: latest
 
-- name: Install libselinux-python
+- name: Install libselinux-python3
   dnf:
-    name: libselinux-python
+    name: libselinux-python3
     state: latest
 
 - name: install yaml-cpp-devel
