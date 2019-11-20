@@ -97,6 +97,20 @@ This will result in the web application being available on url:
 
 https://localhost:8443/webapp/
 
+
+IMA Policy
+----------
+
+This role deploys a basic ima-policy into `/etc/ima/ima-policy` so that IMA
+runtime integrity can be used. For this to activate, you must reboot the
+machine first.
+
+Should you rboot the machine, you will need to start the emulator again:
+
+`/usr/local/bin/tpm_serverd`
+
+`systemctl restart tpm2-abrmd`
+
 License
 -------
 

@@ -5,3 +5,5 @@
 - include: git-repos.yml
 - include: ibm-tpm.yml
 - include: keylime.yml
+- include: ima-policy.yml
+
