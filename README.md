@@ -1,7 +1,7 @@
 Ansible Keylime
 ===============
 
-[![Build Status](https://travis-ci.org/keylime/ansible-keylime-soft-tpm.svg?branch=master)](https://travis-ci.org/keylime/ansible-keylime-soft-tpm) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/keylime-project/community)
+[![Build Status](https://travis-ci.org/keylime/ansible-keylime-tpm-emulator.svg?branch=master)](https://travis-ci.org/keylime/ansible-keylime-tpm-emulator) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/keylime-project/community)
 
 Ansible role to deploy [Keylime](https://github.com/keylime/keylime) and a TPM Emulator,
 alongside the  [Keylime rust cloud node](https://github.com/keylime/rust-keylime)
