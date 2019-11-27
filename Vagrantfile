@@ -35,7 +35,7 @@ Vagrant.configure("2") do |config|
       config.vm.define "keylime#{i}" do |keylime|
          keylime.vm.box = "fedora/31-cloud-base"
          keylime.vm.network :private_network, ip: "10.0.0.#{i}1"
-	       keylime.vm.network "forwarded_port", guest: 443, host: 8443
+	 keylime.vm.network "forwarded_port", guest: 443, host: 8443
          if instances == 1
            hostname = "keylime"
          else
