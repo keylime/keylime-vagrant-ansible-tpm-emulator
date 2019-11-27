@@ -11,11 +11,9 @@ opts = GetoptLong.new(
 )
 
 # defaults
-
 instances = 1
 cpus = 2
 memory = 2048
-
 
 opts.ordering=(GetoptLong::REQUIRE_ORDER)
 
