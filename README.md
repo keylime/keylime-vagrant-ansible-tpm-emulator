@@ -56,21 +56,31 @@ Both roles will deploy the relevant TPM 1.2 Emulator (tpm4720) or 2.0 Emulator (
 Vagrant
 -------
 
-If you prefer, a Vagrantfile is available for provisioning.
+A `Vagrantfile` is available for provisioning.
 
-Clone the repository and then simply run `vagrant up --provider <provider> --provision`
+Clone the repository and then simply run with the following additional args
+added to the `vagrant` command:
+
+
+* `--instances`: The number of Keylime Virtual Machines to create. If not provided, it defaults to `1`
+* `--repo`: This mounts your local Keylime git repository into the virtual machine (allowing you to test your code within the VM). This is optional.
+* `--cpus`: The amount of CPU's. If not provided, it defaults to `2`
+* `--memory`: The amount of memory to assign.  If not provided, it defaults to `2048`
 
 For example, using libvirt:
 
 ```
-vagrant up --provider libvirt --provision
+vagrant --instances=2 --repo=/home/jdoe/keylime --cpus=4 --memory=4096  up --provider libvirt --provision
 ```
 
 For example, using VirtualBox:
 
 ```
-vagrant up --provider virtualbox --provision
+vagrant --instances=2 --repo=/home/jdoe/keylime --cpus=4 --memory=4096  up --provider virtualbox --provision
 ```
+
+| NOTE: Customized args (`--instances`, `--repos` etc), come before the mainvagrant args (such as `up`, `--provider`) |
+| --- |
 
 Once the VM is started, vagrant ssh into the VM and run `sudo su -` to
 become root.
