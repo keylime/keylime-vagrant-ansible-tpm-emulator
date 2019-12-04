@@ -60,8 +60,6 @@ Vagrant.configure("2") do |config|
              ansible.extra_vars = {
                ansible_python_interpreter:"/usr/bin/python3",
              }
-         keylime.vm.provision "shell",
-           inline: "pip3 install merklelib"
            end
         end
     end
