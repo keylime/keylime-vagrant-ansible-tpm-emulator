@@ -50,6 +50,32 @@ For TPM 1.2 use:
 Both roles will deploy the relevant TPM 1.2 Emulator (tpm4720) or 2.0 Emulator
 (IBM software TPM).
 
+Docker
+------
+A docker file is availble in `docker/`
+
+Build the docker image:
+
+```
+
+docker build -t tpm-emulator-base -f docker/Dockerfile .
+```
+
+To run a docker container from the built image
+```
+
+docker run -it -d --name=keylime1 \
+            -p 8443:8443 \
+            -v /path/to/keylime:/root/keylime \
+            tpm-emulator-base
+```
+
+Lastly run the tpm-emulator
+```
+
+docker exec -it keylime1 /usr/local/bin/tpm_serverd
+```
+
 Vagrant
 -------
 
@@ -91,7 +117,7 @@ keylime_verifier
 
 keylime_registrar
 
-keylime_node
+keylime_agent
 ```
 
 WebApp
@@ -116,7 +142,6 @@ Should you reboot the machine, you will need to start the emulator again:
 
 `/usr/local/bin/tpm_serverd`
 
-`systemctl restart tpm2-abrmd`
 
 License
 -------

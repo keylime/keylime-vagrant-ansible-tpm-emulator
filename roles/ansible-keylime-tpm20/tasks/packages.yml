@@ -128,7 +128,3 @@
       name: tpm2-tools
       state: latest
 
-- name: install tpm2-abrmd
-  dnf:
-      name: tpm2-abrmd
-      state: latest
