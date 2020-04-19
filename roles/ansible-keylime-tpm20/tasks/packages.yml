@@ -103,6 +103,11 @@
       name: python3-requests
       state: latest
 
+- name: install python3-sqlalchemy
+  dnf:
+      name: python3-sqlalchemy
+      state: latest
+
 - name: Install libselinux-python3
   dnf:
     name: libselinux-python3
