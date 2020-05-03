@@ -137,3 +137,8 @@
   dnf:
       name: tpm2-abrmd
       state: latest
+
+- name: install python3-zmq
+  dnf:
+      name: python3-zmq
+      state: latests
