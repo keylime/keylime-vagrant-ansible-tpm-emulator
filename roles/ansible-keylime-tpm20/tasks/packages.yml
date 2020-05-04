@@ -141,4 +141,4 @@
 - name: install python3-zmq
   dnf:
       name: python3-zmq
-      state: latests
+      state: latest
