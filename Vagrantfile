@@ -35,7 +35,10 @@ Vagrant.configure("2") do |config|
    (1..instances).each do |i|
       config.vm.define "keylime#{i}" do |keylime|
          keylime.vm.box = "fedora/31-cloud-base"
-         keylime.vm.network :private_network, ip: "10.0.0.#{i}1"
+         # Should you require machines to share a private network
+         # Note, you will need to create the network first within
+         # your provider (VirtualBox / Libvirt etc)
+         # keylime.vm.network :private_network, ip: "10.0.0.#{i}1"
          keylime.vm.network "forwarded_port", guest: 443, host: "844#{i}"
          if instances == 1
            hostname = "keylime"
