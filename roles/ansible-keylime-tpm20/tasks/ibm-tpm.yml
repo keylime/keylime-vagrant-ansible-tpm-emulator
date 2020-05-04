@@ -49,13 +49,18 @@
     regexp: '^ExecStart='
     line: ExecStart=/usr/sbin/tpm2-abrmd --tcti=mssim
 
+- name: Comment out ConditionPathExistsGlob
+  lineinfile:
+    path: /usr/lib/systemd/system/tpm2-abrmd.service
+    regexp: '^ConditionPathExistsGlob='
+    line: '# ConditionPathExistsGlob=/dev/tpm*'
+
 - name: Reload / restart service tpm2-abrmd, in all cases
   systemd:
     name: tpm2-abrmd
     state: restarted
     daemon_reload: yes
-    
-#
+
 # - name: reload service tpm2-abrmd, in all cases
 #   systemd:
 #     name: tpm2-abrmd
