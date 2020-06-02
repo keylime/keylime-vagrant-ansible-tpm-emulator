@@ -32,38 +32,38 @@ opts.each do |opt, arg|
 end
 
 Vagrant.configure("2") do |config|
-   (1..instances).each do |i|
-      config.vm.define "keylime#{i}" do |keylime|
-         keylime.vm.box = "fedora/31-cloud-base"
-         # Should you require machines to share a private network
-         # Note, you will need to create the network first within
-         # your provider (VirtualBox / Libvirt etc)
-         # keylime.vm.network :private_network, ip: "10.0.0.#{i}1"
-         keylime.vm.network "forwarded_port", guest: 443, host: "844#{i}"
-         if instances == 1
-           hostname = "keylime"
-         else
-           hostname = "keylime#{i}"
-         end
-         keylime.vm.hostname = "#{hostname}"
-         if defined? (repo)
-           keylime.vm.synced_folder "#{repo}", "/root/keylime-dev", type: "sshfs"
-         end
-         keylime.vm.provider "virtualbox" do |v|
-          v.memory = "#{memory}"
-          v.cpus = "#{cpus}"
-         end
-         keylime.vm.provider "libvirt" do |vb|
-           vb.random :model => 'random'
-           vb.memory = "#{memory}"
-           vb.cpus = "#{cpus}"
-         end
-         keylime.vm.provision "ansible_local" do |ansible|
-             ansible.playbook = "playbook.yml"
-             ansible.extra_vars = {
-               ansible_python_interpreter:"/usr/bin/python3",
-             }
-           end
-        end
+  (1..instances).each do |i|
+    config.vm.define "keylime#{i}" do |keylime|
+      keylime.vm.box = "fedora/31-cloud-base"
+      # Should you require machines to share a private network
+      # Note, you will need to create the network first within
+      # your provider (VirtualBox / Libvirt etc)
+      # keylime.vm.network :private_network, ip: "10.0.0.#{i}1"
+      keylime.vm.network "forwarded_port", guest: 443, host: "844#{i}"
+      if instances == 1
+        hostname = "keylime"
+      else
+        hostname = "keylime#{i}"
+      end
+      keylime.vm.hostname = "#{hostname}"
+      if defined? (repo)
+        keylime.vm.synced_folder "#{repo}", "/root/keylime-dev", type: "sshfs"
+      end
+      keylime.vm.provider "virtualbox" do |v|
+        v.memory = "#{memory}"
+        v.cpus = "#{cpus}"
+      end
+      keylime.vm.provider "libvirt" do |vb|
+        vb.random :model => 'random'
+        vb.memory = "#{memory}"
+        vb.cpus = "#{cpus}"
+      end
+      keylime.vm.provision "ansible_local" do |ansible|
+          ansible.playbook = "playbook.yml"
+          ansible.extra_vars = {
+            ansible_python_interpreter:"/usr/bin/python3",
+          }
+      end
     end
+  end
 end
