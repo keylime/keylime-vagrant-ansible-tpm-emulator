@@ -7,7 +7,8 @@ opts = GetoptLong.new(
   [ '--instances', GetoptLong::OPTIONAL_ARGUMENT ],
   [ '--repo', GetoptLong::OPTIONAL_ARGUMENT ],
   [ '--cpus', GetoptLong::OPTIONAL_ARGUMENT ],
-  [ '--memory', GetoptLong::OPTIONAL_ARGUMENT ]
+  [ '--memory', GetoptLong::OPTIONAL_ARGUMENT ],
+  [ '--verbose', GetoptLong::NO_ARGUMENT ]
 )
 
 # defaults
@@ -15,6 +16,7 @@ instances = 1
 cpus = 2
 memory = 2048
 repo = ''
+verbose = ''
 
 opts.ordering=(GetoptLong::REQUIRE_ORDER)
 
@@ -28,6 +30,8 @@ opts.each do |opt, arg|
       cpus = arg.to_i
     when '--memory'
       memory = arg.to_i
+    when '--verbose'
+      verbose = true
   end
 end
 
@@ -63,6 +67,9 @@ Vagrant.configure("2") do |config|
           ansible.extra_vars = {
             ansible_python_interpreter:"/usr/bin/python3",
           }
+          if defined? (verbose) and verbose == true
+            ansible.verbose = true
+          end
       end
     end
   end
