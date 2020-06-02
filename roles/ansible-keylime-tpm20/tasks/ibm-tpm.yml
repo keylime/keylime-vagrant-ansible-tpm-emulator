@@ -17,10 +17,10 @@
   command: install -c /root/ibmtpm/src/tpm_server /usr/local/bin/tpm_server
 
 - name: Install init_tpm_server script
-  command: install -c /root/keylime/swtpm2_scripts/init_tpm_server /usr/local/bin/init_tpm_server
+  command: install -c /root/keylime/scripts/init_tpm_server /usr/local/bin/init_tpm_server
 
 - name: Install tpm_serverd script
-  command: install -c /root/keylime/swtpm2_scripts/tpm_serverd /usr/local/bin/tpm_serverd
+  command: install -c /root/keylime/scripts/tpm_serverd /usr/local/bin/tpm_serverd
 
 - name: Changing perm of "tpm_serverd", adding "+x"
   file: dest=/usr/local/bin/tpm_serverd mode=a+x
