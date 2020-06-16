@@ -77,6 +77,7 @@ vagrant --instances=2 --repo=/home/jdoe/keylime --cpus=4 --memory=4096  up --pro
 ```
 
 | NOTE: Customized args (`--instances`, `--repos` etc), come before the mainvagrant args (such as `up`, `--provider`) |
+| Example: To `ssh` into the second vagrant machine use `vagrant --instances=2 ssh keylime2`|
 | --- |
 
 Once the VM is started, vagrant ssh into the VM and run `sudo su -` to
@@ -90,6 +91,10 @@ You can then start the various components using commands:
 keylime_verifier
 
 keylime_registrar
+
+keylime_ima_emulator
+
+keylime_agent
 
 keylime_node
 ```
