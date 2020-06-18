@@ -76,7 +76,7 @@ For example, using VirtualBox:
 vagrant --instances=2 --repo=/home/jdoe/keylime --cpus=4 --memory=4096  up --provider virtualbox --provision
 ```
 
-| NOTE: Customized args (`--instances`, `--repos` etc), come before the mainvagrant args (such as `up`, `--provider`) |
+| NOTE: Customized args (`--instances`, `--repos` etc), come before the mainvagrant args (such as `up`, `status`, `--provider`). Example: To `ssh` into the second machine instance, keylime2, use the vagrant command as such : `vagrant --instances=2 ssh keylime2` |
 | --- |
 
 Once the VM is started, vagrant ssh into the VM and run `sudo su -` to
@@ -90,6 +90,8 @@ You can then start the various components using commands:
 keylime_verifier
 
 keylime_registrar
+
+keylime_agent
 
 keylime_node
 ```
@@ -117,6 +119,10 @@ Should you reboot the machine, you will need to start the emulator again:
 `/usr/local/bin/tpm_serverd`
 
 `systemctl restart tpm2-abrmd`
+
+Once the `tpm2-abrmd` service is running, start the IMA component using the command:
+
+`keylime_ima_emulator`
 
 License
 -------
