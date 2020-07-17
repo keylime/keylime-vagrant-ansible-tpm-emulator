@@ -2,6 +2,7 @@
 # vi: set ft=ruby :
 
 require 'getoptlong'
+require 'yaml'
 
 opts = GetoptLong.new(
   [ '--instances', GetoptLong::OPTIONAL_ARGUMENT ],
@@ -11,15 +12,24 @@ opts = GetoptLong.new(
   [ '--verbose', GetoptLong::NO_ARGUMENT ]
 )
 
-# defaults
-instances = 1
-cpus = 2
-memory = 2048
-repo = ''
-verbose = ''
+config_file = File.expand_path(File.join(File.dirname(__FILE__), 'vagrant_variables.yml'))
+
+settings={}
+if File.exist?(config_file)
+  settings = YAML.load_file(config_file)
+end
+
+# Use defaults defined in vagrant variables file, otherwise set defaults.
+instances = settings['instances'] ? settings['instances'] : 1
+cpus      = settings['cpus']      ? settings['cpus']      : 2
+memory    = settings['memory']    ? settings['memory']    : 2048
+repo      = settings['repo']      ? settings['repo']      : ''
+verbose   = settings['verbose']   ? settings['verbose']   : false
 
 opts.ordering=(GetoptLong::REQUIRE_ORDER)
 
+# Command line options take precedence i.e. override any defaults if command
+# line options are provided.
 opts.each do |opt, arg|
   case opt
     when '--instances'
