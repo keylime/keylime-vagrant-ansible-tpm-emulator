@@ -79,6 +79,18 @@ vagrant --instances=2 --repo=/home/jdoe/keylime --cpus=4 --memory=4096  up --pro
 | NOTE: Customized args (`--instances`, `--repos` etc), come before the mainvagrant args (such as `up`, `status`, `--provider`). Example: To `ssh` into the second machine instance, keylime2, use the vagrant command as such : `vagrant --instances=2 ssh keylime2` |
 | --- |
 
+If you would like to set these defaults and customize them without having to
+specify them on the command line each time, then use the
+`vagrant_variables.yml.sample` vagrant variables config file and copy it to
+`vagrant_variables.yml`:
+
+```shell
+cp vagrant_variables.yml.sample vagrant_variables.yml
+```
+
+You can still override the defaults in `vagrant_variables.yml` by using the
+command line options.
+
 Once the VM is started, vagrant ssh into the VM and run `sudo su -` to
 become root.
 
