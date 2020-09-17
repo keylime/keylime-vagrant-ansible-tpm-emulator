@@ -3,117 +3,30 @@
       name: "*"
       state: latest
 
-- name: install git
+- name: install prerequisite packages
   dnf:
-      name: git
-      state: latest
-
-- name: install automake
-  dnf:
-      name: automake
-      state: latest
-
-- name: install libtool
-  dnf:
-      name: libtool
-      state: latest
-
-- name: install autoconf
-  dnf:
-      name: autoconf
-      state: latest
-
-- name: install autoconf-archive
-  dnf:
-      name: autoconf-archive
-      state: latest
-
-- name: install libstdc++-devel
-  dnf:
-      name: libstdc++-devel
-      state: latest
-
-- name: install gcc
-  dnf:
-      name: gcc
-      state: latest
-
-- name: install pkg-config
-  dnf:
-      name: pkg-config
-      state: latest
-
-- name: install uriparser-devel
-  dnf:
-      name: uriparser-devel
-      state: latest
-
-- name: install libgcrypt-devel
-  dnf:
-      name: libgcrypt-devel
-      state: latest
-
-- name: install dbus-devel
-  dnf:
-      name: dbus-devel
-      state: latest
-
-- name: install glib2-devel
-  dnf:
-      name: glib2-devel
-      state: latest
-
-- name: install compat-openssl10-devel
-  dnf:
-      name: compat-openssl10-devel
-      state: latest
-
-- name: install libcurl-devel
-  dnf:
-      name: libcurl-devel
-      state: latest
-
-- name: install python3-pip
-  dnf:
-      name: python3-pip
-      state: latest
-
-- name: install PyYAML
-  dnf:
-      name: python3-pyyaml
-      state: latest
-
-- name: install python3-m2crypto
-  dnf:
-      name: python3-m2crypto
-      state: latest
-
-- name: install python3-tornado
-  dnf:
-      name: python3-tornado
-      state: latest
-
-- name: install python3-simplejson
-  dnf:
-      name: python3-simplejson
-      state: latest
-
-- name: install python3-requests
-  dnf:
-      name: python3-requests
-      state: latest
-
-- name: install python3-sqlalchemy
-  dnf:
-      name: python3-sqlalchemy
-      state: latest
-
-- name: install yaml-cpp-devel
-  dnf:
-      name: yaml-cpp-devel
-      state: latest
-
-- name: install procps-ng
-  dnf:
-      name: procps-ng
+      name:
+        - git
+        - automake
+        - libtool
+        - autoconf
+        - autoconf-archive
+        - libstdc++-devel
+        - gcc
+        - pkg-config
+        - uriparser-devel
+        - libgcrypt-devel
+        - dbus-devel
+        - glib2-devel
+        - compat-openssl10-devel
+        - libcurl-devel
+        - python3-pip
+        - python3-pyyaml
+        - python3-m2crypto
+        - python3-tornado
+        - python3-simplejson
+        - python3-requests
+        - python3-sqlalchemy
+        - yaml-cpp-devel
+        - procps-ng
       state: latest
