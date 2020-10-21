@@ -27,6 +27,7 @@
         - python3-simplejson
         - python3-requests
         - python3-sqlalchemy
+        - python3-alembic
         - libselinux-python3
         - yaml-cpp-devel
         - procps-ng
