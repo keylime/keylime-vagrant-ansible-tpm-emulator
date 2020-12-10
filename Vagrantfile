@@ -9,7 +9,8 @@ opts = GetoptLong.new(
   [ '--repo', GetoptLong::OPTIONAL_ARGUMENT ],
   [ '--cpus', GetoptLong::OPTIONAL_ARGUMENT ],
   [ '--memory', GetoptLong::OPTIONAL_ARGUMENT ],
-  [ '--verbose', GetoptLong::NO_ARGUMENT ]
+  [ '--verbose', GetoptLong::NO_ARGUMENT ],
+  [ '--qualityoflife', GetoptLong::NO_ARGUMENT ]
 )
 
 config_file = File.expand_path(File.join(File.dirname(__FILE__), 'vagrant_variables.yml'))
@@ -25,6 +26,7 @@ cpus      = settings['cpus']      ? settings['cpus']      : 2
 memory    = settings['memory']    ? settings['memory']    : 2048
 repo      = settings['repo']      ? settings['repo']      : ''
 verbose   = settings['verbose']   ? settings['verbose']   : false
+qualityoflife   = settings['qualityoflife']   ? settings['qualityoflife']   : false
 
 opts.ordering=(GetoptLong::REQUIRE_ORDER)
 
@@ -42,6 +44,8 @@ opts.each do |opt, arg|
       memory = arg.to_i
     when '--verbose'
       verbose = true
+    when '--qualityoflife'
+      qualityoflife = true
   end
 end
 
@@ -73,6 +77,7 @@ Vagrant.configure("2") do |config|
         vb.cpus = "#{cpus}"
       end
       keylime.vm.provision "ansible_local" do |ansible|
+          ansible.verbose = "v"
           ansible.playbook = "playbook.yml"
           ansible.extra_vars = {
             ansible_python_interpreter:"/usr/bin/python3",
@@ -80,6 +85,15 @@ Vagrant.configure("2") do |config|
           if defined? (verbose) and verbose == true
             ansible.verbose = true
           end
+      end
+      if defined? (qualityoflife) and qualityoflife == true
+        keylime.vm.provision "ansible_local" do |ansible|
+            ansible.verbose = "v"
+            ansible.playbook = "quality_of_life.yml"
+            if defined? (verbose) and verbose == true
+              ansible.verbose = true
+            end
+        end
       end
     end
   end

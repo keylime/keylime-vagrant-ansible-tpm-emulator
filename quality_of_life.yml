@@ -1,0 +1,35 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: Enable "ll" as an alias for "ls -lAh"
+      lineinfile:
+        path: /home/vagrant/.bashrc
+        line: alias ll='ls -lAh'
+        insertafter: "User specific aliases and functions"
+    - name: Install Powerline, an improved shell prompt
+      dnf:
+        name: powerline
+        state: present
+    - name: Set up Powerline
+      blockinfile:
+        path: /home/vagrant/.bashrc
+        block: |
+          ## Enable Poweline, an improved shell prompt
+          if [ -f `which powerline-daemon` ]; then
+            powerline-daemon -q
+            POWERLINE_BASH_CONTINUATION=1
+            POWERLINE_BASH_SELECT=1
+            . /usr/share/powerline/bash/powerline.sh
+          fi
+    - name: Install vim-powerline
+      dnf:
+        name: vim-powerline
+        state: present
+    - name: Install .vimrc file
+      copy:
+        src: extras/.vimrc
+        dest: /home/vagrant/.vimrc
+        mode: 0644
+        owner: vagrant
+        group: vagrant

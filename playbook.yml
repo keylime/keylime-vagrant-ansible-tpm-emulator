@@ -6,9 +6,14 @@
       selinux:
         policy: targeted
         state: permissive
-    - name: 'install python3'
-      raw: sudo dnf -y install python3
-    - name: 'install libselinux-python3'
-      raw: sudo dnf -y install libselinux-python3
+    - name: Ensure Python 3 is available
+      dnf:
+        name: python3
+        state: present
+    - name: Install libselinux-python3
+      dnf:
+        name: libselinux-python3
+        state: present
   roles:
     - ansible-keylime-tpm20
+    - ansible-keylime-user
