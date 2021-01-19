@@ -4,4 +4,4 @@
 - include: git-repos.yml
 - include: keylime.yml
 - include: ima-policy.yml
-- include: ibm-tpm.yml
+- include: swtpm.yml

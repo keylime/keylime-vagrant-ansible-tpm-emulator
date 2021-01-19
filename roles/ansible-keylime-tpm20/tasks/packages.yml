@@ -33,6 +33,16 @@
         - procps-ng
         - tpm2-tss
         - tpm2-tools
-        - tpm2-abrmd
+        - libtpms
+        - swtpm
+        - swtpm-tools
         - python3-zmq
+        - clang-devel
+        - kmod
+        - tpm2-tss-devel
+        - rust
+        - clippy
+        - cargo
+        - llvm
+        - llvm-devel
       state: latest
