@@ -64,6 +64,9 @@ Vagrant.configure("2") do |config|
         hostname = "keylime#{i}"
       end
       keylime.vm.hostname = "#{hostname}"
+      if defined? (repo)
+        keylime.vm.synced_folder "#{repo}", "/root/keylime-dev", type: "sshfs"
+      end
       keylime.vm.provider "virtualbox" do |v|
         v.memory = "#{memory}"
         v.cpus = "#{cpus}"
