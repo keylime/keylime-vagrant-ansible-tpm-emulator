@@ -16,4 +16,3 @@
         state: present
   roles:
     - ansible-keylime-tpm20
-    - ansible-keylime-user
