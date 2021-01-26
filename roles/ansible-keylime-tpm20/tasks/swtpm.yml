@@ -12,8 +12,7 @@
 - name: Run swtpm
   command: swtpm chardev --tpm2 --vtpm-proxy --tpmstate dir=/tmp/swtpm -d
 
-- name: 'Set environment'
-  shell: "echo $TPM2TOOLS_TCTI"
-  environment:
-    TPM2TOOLS_TCTI: "device:/dev/tpm0"
-
+- name: Copy in swptm management script
+  copy:
+    src: swtpm.sh
+    dest: /root/swtpm.sh

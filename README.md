@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/keylime/ansible-keylime-tpm-emulator.svg?branch=master)](https://travis-ci.org/keylime/ansible-keylime-tpm-emulator) [![Slack chat](https://img.shields.io/badge/Chat-CNCF%20Slack-informational)](https://join.slack.com/t/cloud-native/shared_invite/zt-fyy3b8up-qHeDNVqbz1j8HDY6g1cY4w)
 
 Ansible role to deploy [Keylime](https://github.com/keylime/keylime) with a
-pre-configured and ready to use TPM Emulator and Vagrant file to easily bring up
+pre-configured and ready to use swtpm and Vagrant file to easily bring up
 a test environment.
 
 For details on using Keylime, please consult the general
@@ -26,27 +26,6 @@ Run the example playbook against your target remote node(s).
 ```
 ansible-playbook -i your_hosts playbook.yml
 ```
-
-### TPM Version Control
-
-It is possible to chose between TPM version 1.2 and TPM 2.0 simply by changing
-the role in the `playbook.yml` file [here](https://github.com/keylime/ansible-keylime-tpm-emulator/blob/master/playbook.yml#L14).
-
-For TPM 2.0 use:
-
-```
-  - ansible-keylime-tpm20
-```
-
-For TPM 1.2 use:
-
-```
-  - ansible-keylime-tpm12
-```
-
-Both roles will deploy the relevant TPM 2.0 Emulator
-([IBM software TPM](https://sourceforge.net/projects/ibmswtpm2/)) or TPM 1.2 Emulator
-([tpm4720](https://github.com/keylime/tpm4720-keylime)), respectively.
 
 ## Usage: Vagrant
 
@@ -94,7 +73,7 @@ command line options.
 Once the VM is started, use `vagrant ssh` to ssh into the VM and run `sudo su -`
 to become root.
 
-The TPM emulator will be running.
+The swtpm will be running.
 
 You can then start the various components using commands:
 
@@ -117,7 +96,6 @@ This will result in the web application being available on url:
 
 https://localhost:8443/webapp/
 
-
 ## IMA Policy
 
 This role deploys a basic ima-policy into `/etc/ima/ima-policy` so that IMA
@@ -133,6 +111,13 @@ Should you reboot the machine, you will need to start the emulator again:
 Once the `tpm2-abrmd` service is running, start the IMA component using the command:
 
 `keylime_ima_emulator`
+
+## Management of the SWTPM
+
+Upon first run of this role a swtpm will be made available in `/tpm/swtpm`
+
+A reboot will lose this instance. Should you need a new tpm, then you can create
+one with the included script `/root/swtpm.sh`
 
 ## License
 [Apache
