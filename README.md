@@ -27,27 +27,6 @@ Run the example playbook against your target remote node(s).
 ansible-playbook -i your_hosts playbook.yml
 ```
 
-### TPM Version Control
-
-It is possible to chose between TPM version 1.2 and TPM 2.0 simply by changing
-the role in the `playbook.yml` file [here](https://github.com/keylime/ansible-keylime-tpm-emulator/blob/master/playbook.yml#L14).
-
-For TPM 2.0 use:
-
-```
-  - ansible-keylime-tpm20
-```
-
-For TPM 1.2 use:
-
-```
-  - ansible-keylime-tpm12
-```
-
-Both roles will deploy the relevant TPM 2.0 Emulator
-([IBM software TPM](https://sourceforge.net/projects/ibmswtpm2/)) or TPM 1.2 Emulator
-([tpm4720](https://github.com/keylime/tpm4720-keylime)), respectively.
-
 ## Usage: Vagrant
 
 A `Vagrantfile` is available for provisioning virtual machines for local
@@ -107,13 +86,31 @@ keylime_agent
 
 keylime_node
 ```
+### Upgrading VMs
+
+If you just want to upgrade Keylime within your VM(s), running the following as
+root, from within `/root/keylime`, should be enough:
+`git pull`
+`python setup.py install`
+
+To fully rebuild your VM(s), run the following from the directory where you cloned this repo:
+`vagrant destroy`
+Note: this will delete your Keylime VM(s).
+
+You can then re-deploy the VM(s) by re-running the provisioning step.
+
+Lastly, if you have a VM that was provisioned using an older version of Fedora
+(say, 31, while the current Vagrantfile will use Fedora 33), you will need to
+remove the Fedora 31 cloudbase image before `vagrant up --provision` will
+upgrade you to the new version of Fedora, eg:
+`vagrant box remove fedora/31-cloud-base`
 
 ## WebApp
 
 The web application can be started with the command `keylime_webapp`. If using
 Vagrant, port 443 will be forwarded from the guest to port 8443 on the host.
 
-This will result in the web application being available on url:
+This will result in the web application being available at the following URL:
 
 https://localhost:8443/webapp/
 
