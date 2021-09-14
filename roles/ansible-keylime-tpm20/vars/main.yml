@@ -2,3 +2,8 @@
 # section for vars
 shell_profiles:
 - .bash_profile
+
+# Kernel resource manager
+os_environment:
+  - key: TPM2TOOLS_TCTI
+    value : "device:/dev/tpm0"

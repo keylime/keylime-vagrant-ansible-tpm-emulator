@@ -4,4 +4,13 @@
 - include: git-repos.yml
 - include: keylime.yml
 - include: ima-policy.yml
-- include: ibm-tpm.yml
+- include: swtpm.yml
+
+# This applies all task env vars. Entries made to var/main.yml
+- name: populate /etc/environment
+  lineinfile:
+    dest: "/etc/environment"
+    state: present
+    regexp: "^{{ item.key }}="
+    line: "{{ item.key }}={{ item.value}}"
+  with_items: "{{ os_environment }}"

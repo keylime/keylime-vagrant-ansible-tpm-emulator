@@ -7,9 +7,10 @@ also consider updating your git remotes, although Github redirect for a while*
 
 [![Build Status](https://travis-ci.org/keylime/ansible-keylime-tpm-emulator.svg?branch=master)](https://travis-ci.org/keylime/ansible-keylime-tpm-emulator) [![Slack chat](https://img.shields.io/badge/Chat-CNCF%20Slack-informational)](https://join.slack.com/t/cloud-native/shared_invite/zt-fyy3b8up-qHeDNVqbz1j8HDY6g1cY4w)
 
+
 A Vagrant file to easily bring up a test Keylime environment using an Ansible
 role to deploy [Keylime](https://github.com/keylime/keylime) with a
-pre-configured and ready to use TPM Emulator.
+pre-configured and ready to use swtpm.
 
 For details on using Keylime, please consult the general
 [project documentation](https://keylime-docs.readthedocs.io/)
@@ -79,7 +80,7 @@ command line options.
 Once the VM is started, use `vagrant ssh` to ssh into the VM and run `sudo su -`
 to become root.
 
-The TPM emulator will be running.
+The swtpm will be running.
 
 You can then start the various components using commands:
 
@@ -120,7 +121,6 @@ This will result in the web application being available at the following URL:
 
 https://localhost:8443/webapp/
 
-
 ## IMA Policy
 
 This role deploys a basic ima-policy into `/etc/ima/ima-policy` so that IMA
@@ -136,6 +136,13 @@ Should you reboot the machine, you will need to start the emulator again:
 Once the `tpm2-abrmd` service is running, start the IMA component using the command:
 
 `keylime_ima_emulator`
+
+## Management of the SWTPM
+
+Upon first run of this role a swtpm will be made available in `/tpm/swtpm`
+
+A reboot will lose this instance. Should you need a new tpm, then you can create
+one with the included script `/root/swtpm.sh`
 
 ## License
 [Apache

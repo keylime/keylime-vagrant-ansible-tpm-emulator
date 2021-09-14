@@ -1,0 +1,18 @@
+- name: Create swtpm directory
+  file:
+    path: /tmp/swtpm
+    state: directory
+
+- name: load swtpm module
+  command: modprobe tpm_vtpm_proxy
+
+- name: Setup swtpm
+  command: swtpm_setup --tpm2 --tpmstate /tmp/swtpm --createek --allow-signing --decryption --create-ek-cert --create-platform-cert --display
+
+- name: Run swtpm
+  command: swtpm chardev --tpm2 --vtpm-proxy --tpmstate dir=/tmp/swtpm -d
+
+- name: Copy in swptm management script
+  copy:
+    src: swtpm.sh
+    dest: /root/swtpm.sh
