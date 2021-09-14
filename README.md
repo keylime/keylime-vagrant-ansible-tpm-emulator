@@ -1,10 +1,16 @@
-# Vagrant Ansible Keylime TPM Emulator
+**ANNOUNCE:** *On 2020-02-10 the ansible-keylime-tpm-emulator repo has been renamed to
+keylime-vagrant-ansible-tpm-emulator . If you have a fork you might want to
+rename the fork just to keep your sanity (although it's not required). You might
+also consider updating your git remotes, although Github redirect for a while*
+
+# Keuylime Vagrant Ansible TPM Emulator
 
 [![Build Status](https://travis-ci.org/keylime/ansible-keylime-tpm-emulator.svg?branch=master)](https://travis-ci.org/keylime/ansible-keylime-tpm-emulator) [![Slack chat](https://img.shields.io/badge/Chat-CNCF%20Slack-informational)](https://join.slack.com/t/cloud-native/shared_invite/zt-fyy3b8up-qHeDNVqbz1j8HDY6g1cY4w)
 
-Ansible role to deploy [Keylime](https://github.com/keylime/keylime) with a
-pre-configured and ready to use swtpm and Vagrant file to easily bring up
-a test environment.
+
+A Vagrant file to easily bring up a test Keylime environment using an Ansible
+role to deploy [Keylime](https://github.com/keylime/keylime) with a
+pre-configured and ready to use swtpm.
 
 For details on using Keylime, please consult the general
 [project documentation](https://keylime-docs.readthedocs.io/)
@@ -20,8 +26,9 @@ up a sandbox environment to test drive Keylime.
 Should you want to deploy with a hardware TPM, use the [anisble-keylime role](https://github.com/keylime/ansible-keylime)
 
 ## Usage: Ansible role
+The Ansible role may be used on its own.
 
-Run the example playbook against your target remote node(s).
+Run the example playbook against your target remote node(s). For instance:
 
 ```
 ansible-playbook -i your_hosts playbook.yml
@@ -30,7 +37,7 @@ ansible-playbook -i your_hosts playbook.yml
 ## Usage: Vagrant
 
 A `Vagrantfile` is available for provisioning virtual machines for local
-testing..
+testing.
 
 Clone the repository and then simply run with the following additional args
 added to the `vagrant` command:
@@ -86,13 +93,31 @@ keylime_agent
 
 keylime_node
 ```
+### Upgrading VMs
+
+If you just want to upgrade Keylime within your VM(s), running the following as
+root, from within `/root/keylime`, should be enough:
+`git pull`
+`python setup.py install`
+
+To fully rebuild your VM(s), run the following from the directory where you cloned this repo:
+`vagrant destroy`
+Note: this will delete your Keylime VM(s).
+
+You can then re-deploy the VM(s) by re-running the provisioning step.
+
+Lastly, if you have a VM that was provisioned using an older version of Fedora
+(say, 31, while the current Vagrantfile will use Fedora 33), you will need to
+remove the Fedora 31 cloudbase image before `vagrant up --provision` will
+upgrade you to the new version of Fedora, eg:
+`vagrant box remove fedora/31-cloud-base`
 
 ## WebApp
 
 The web application can be started with the command `keylime_webapp`. If using
 Vagrant, port 443 will be forwarded from the guest to port 8443 on the host.
 
-This will result in the web application being available on url:
+This will result in the web application being available at the following URL:
 
 https://localhost:8443/webapp/
 
