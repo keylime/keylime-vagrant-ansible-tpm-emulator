@@ -42,12 +42,17 @@ Clone the repository and then simply run with the following additional args
 added to the `vagrant` command:
 
 
-* `--instances`: The number of Keylime Virtual Machines to create. If not provided, it defaults to `1`
-* `--repo`: This mounts your local Keylime git repository into the virtual machine (allowing you to test your code within the VM). This is optional.
-* `--cpus`: The amount of CPU's. If not provided, it defaults to `2`
-* `--memory`: The amount of memory to assign.  If not provided, it defaults to `2048`
-* `--qualityoflife`: Adds a few extras, such as the Powerline improved bash shell
-   prompt as well as an ls alias (ll for ls -lAh). This is optional.
+* `--instances`: The number of Keylime virtual machines to create. If not
+  provided, it defaults to `1`
+* `--repo`: This is intended to help you hack on Keylime. It mounts a local
+Keylime Git repository into the virtual machine, allowing you to test your code
+within the VM. This is optional and will mount the repo directory you pass in
+at "/root/keylime-dev".
+* `--cpus`: The number of CPUs. If not provided, defaults to `2`
+* `--memory`: The amount of memory to assign.  If not provided, defaults to
+  `2048`
+* `--qualityoflife`: Adds a few extras, such as the Powerline improved bash
+  shell prompt as well as an ls alias (ll for ls -lAh). This is optional.
 
 Deployment example, using libvirt as the virtualization provider:
 
@@ -92,6 +97,11 @@ keylime_agent
 
 keylime_node
 ```
+
+Note: you will most likely need to export the right TPM2TOOLS_TCTI environment
+variable before being able to successfully start keylime_agent. To do so:
+`export TPM2TOOLS_TCTI="mssim:port=2321"`
+
 ### Upgrading VMs
 
 If you just want to upgrade Keylime within your VM(s), running the following as
@@ -127,7 +137,8 @@ This role deploys a basic ima-policy into `/etc/ima/ima-policy` so that IMA
 run time integrity may be used. For this to activate, you must reboot the
 machine first (if you're using vagrant, perform `vagrant reload`)
 
-Should you reboot the machine, you will need to start the emulator again:
+### Obsolete, as we don't use abrmd anymore
+Previously, when rebooting the machine, one needed to start the emulator again:
 
 `/usr/local/bin/tpm_serverd`
 
@@ -137,7 +148,14 @@ Once the `tpm2-abrmd` service is running, start the IMA component using the comm
 
 `keylime_ima_emulator`
 
+## Access to Keylime components from the host
+
+To allow direct access to the Keylime components from the host machine, you can
+forward the ports for the various Keylime components by uncommenting the
+relevant lines in the Vagrantfile.
+
 ## License
+
 [Apache
 2.0](https://github.com/keylime/ansible-keylime-tpm-emulator/blob/master/LICENSE)
 
