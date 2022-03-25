@@ -28,52 +28,80 @@
 - name: Changing perm of "init_tpm_server", adding "+x"
   file: dest=/usr/local/bin/init_tpm_server mode=a+x
 
-- name: 'Set environment'
-  shell: "echo $TPM2TOOLS_TCTI"
-  environment:
-    TPM2TOOLS_TCTI: "tabrmd:bus_name=com.intel.tss2.Tabrmd"
-
 - name: Ensure tpm_server is not running
   command: pkill tpm_server
   ignore_errors: yes
+   
+- name:  Clear TPM on first use
+  command: init_tpm_server
+  become: yes
 
 - name: Start TPM Emulator
   command: /usr/local/bin/tpm_serverd
   become: yes
 
-- name: Enable tpm2_abrmd service and ensure it is not masked
+- name: Download ima_stub_service script tpm_with_ima.sh
+  get_url:
+    url: https://github.com/keylime/keylime/raw/master/ima_stub_service/tpm_with_ima.sh
+    dest: /usr/local/bin/tpm_with_ima.sh
+    mode: '0744'
+
+- name: Downloa ima_stub_service systemd service tpm_emulator.service
+  get_url:
+    url: https://github.com/keylime/keylime/raw/master/ima_stub_service/tpm_emulator.service
+    dest: /etc/systemd/system/tpm_emulator.service
+    mode: '0664'
+
+- name: Enable tpm_emulator systemd service and ensure it is not masked
   systemd:
-    name: tpm2-abrmd
+    name: tpm_emulator
     enabled: yes
     masked: no
 
-- name: Create a systemd drop-in directory for tpm2-abrmd
-  file:
-    dest: /etc/systemd/system/tpm2-abrmd.service.d/
-    state: directory
-    mode: '0755'
-    owner: root
-    group: root
-
-- name: Change TCTI to emulator in tpm2-abrmd unit
-  copy:
-    src: files/tpm2-abrmd.service.d/10-tcti-emulator.conf
-    dest: /etc/systemd/system/tpm2-abrmd.service.d/
-    owner: root
-    group: root
-    mode: '0644'
-
-- name: Remove ConditionPathExistsGlob from tpm2-abrmd unit
-  copy:
-    src: files/tpm2-abrmd.service.d/20-remove-conditionpathexistsglob.conf
-    dest: /etc/systemd/system/tpm2-abrmd.service.d/
-    owner: root
-    group: root
-    mode: '0644'
-
-- name: Reload / restart service tpm2-abrmd, in all cases
+- name: Reload / restart service tpm_emulator service, in all cases
   systemd:
-    name: tpm2-abrmd
+    name: tpm_emulator
     state: restarted
-    daemon_reload: yes
+#    daemon_reload: yes
 
+# We don't use abrmd anymore, commenting this out.
+#- name: 'Set environment'
+#  shell: "echo $TPM2TOOLS_TCTI"
+#  environment:
+#    TPM2TOOLS_TCTI: "tabrmd:bus_name=com.intel.tss2.Tabrmd"
+#
+#- name: Enable tpm2_abrmd service and ensure it is not masked
+#  systemd:
+#    name: tpm2-abrmd
+#    enabled: yes
+#    masked: no
+#
+#- name: Create a systemd drop-in directory for tpm2-abrmd
+#  file:
+#    dest: /etc/systemd/system/tpm2-abrmd.service.d/
+#    state: directory
+#    mode: '0755'
+#    owner: root
+#    group: root
+#
+#- name: Change TCTI to emulator in tpm2-abrmd unit
+#  copy:
+#    src: files/tpm2-abrmd.service.d/10-tcti-emulator.conf
+#    dest: /etc/systemd/system/tpm2-abrmd.service.d/
+#    owner: root
+#    group: root
+#    mode: '0644'
+#
+#- name: Remove ConditionPathExistsGlob from tpm2-abrmd unit
+#  copy:
+#    src: files/tpm2-abrmd.service.d/20-remove-conditionpathexistsglob.conf
+#    dest: /etc/systemd/system/tpm2-abrmd.service.d/
+#    owner: root
+#    group: root
+#    mode: '0644'
+#
+#- name: Reload / restart service tpm2-abrmd, in all cases
+#  systemd:
+#    name: tpm2-abrmd
+#    state: restarted
+#    daemon_reload: yes

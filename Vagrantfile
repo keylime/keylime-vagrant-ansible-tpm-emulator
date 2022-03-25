@@ -51,17 +51,30 @@ end
 
 Vagrant.configure("2") do |config|
   (1..instances).each do |i|
-    config.vm.define "keylime#{i}" do |keylime|
-      keylime.vm.box = "fedora/33-cloud-base"
+    config.vm.define "keylime-fedora#{i}" do |keylime|
+      keylime.vm.box = "fedora/35-cloud-base"
       # Should you require machines to share a private network
       # Note, you will need to create the network first within
       # your provider (VirtualBox / Libvirt etc)
       # keylime.vm.network :private_network, ip: "10.0.0.#{i}1"
+
+      # Uncomment the following to forward ports on the VM and
+      # allow access to Keylime components from the host machine.
       keylime.vm.network "forwarded_port", guest: 443, host: "844#{i}"
+      # Forward Cloud Verifier listen port:
+      #keylime.vm.network "forwarded_port", guest: 8881, host: "8881"
+      # Forward Cloud Verifier revocation port:
+      #keylime.vm.network "forwarded_port", guest: 8892, host: "8892"
+      # Forward registrar listen port:
+      #keylime.vm.network "forwarded_port", guest: 8890, host: "8890"
+      # Forward registrar TLS listen port:
+      #keylime.vm.network "forwarded_port", guest: 8891, host: "8891"
+      # Forward agent listen port:
+      #keylime.vm.network "forwarded_port", guest: 9002, host: "9002"
       if instances == 1
-        hostname = "keylime"
+        hostname = "keylime-fedora"
       else
-        hostname = "keylime#{i}"
+        hostname = "keylime-fedora#{i}"
       end
       keylime.vm.hostname = "#{hostname}"
       if defined? (repo)
