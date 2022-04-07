@@ -83,6 +83,7 @@ Vagrant.configure("2") do |config|
       keylime.vm.provider "virtualbox" do |v|
         v.memory = "#{memory}"
         v.cpus = "#{cpus}"
+        v.customize ["modifyvm", :id, "--audio", "none"]
       end
       keylime.vm.provider "libvirt" do |vb|
         vb.random :model => 'random'
