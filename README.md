@@ -3,7 +3,7 @@ keylime-vagrant-ansible-tpm-emulator . If you have a fork you might want to
 rename the fork just to keep your sanity (although it's not required). You might
 also consider updating your git remotes, although Github redirect for a while*
 
-# Keuylime Vagrant Ansible TPM Emulator
+# Keylime Vagrant Ansible TPM Emulator
 
 [![Build Status](https://travis-ci.org/keylime/ansible-keylime-tpm-emulator.svg?branch=master)](https://travis-ci.org/keylime/ansible-keylime-tpm-emulator) [![Slack chat](https://img.shields.io/badge/Chat-CNCF%20Slack-informational)](https://join.slack.com/t/cloud-native/shared_invite/zt-fyy3b8up-qHeDNVqbz1j8HDY6g1cY4w)
 
