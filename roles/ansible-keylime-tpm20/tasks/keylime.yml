@@ -1,3 +1,8 @@
+- name: Install Keylime dependencies
+  shell: "/usr/bin/pip3 install -r requirements.txt"
+  args:
+    chdir: /root/keylime
+
 - name: Run python setup tools to install Keylime
   shell: "/usr/bin/python3 setup.py install"
   args:
