@@ -137,16 +137,11 @@ This role deploys a basic ima-policy into `/etc/ima/ima-policy` so that IMA
 run time integrity may be used. For this to activate, you must reboot the
 machine first (if you're using vagrant, perform `vagrant reload`)
 
-### Obsolete, as we don't use abrmd anymore
-Previously, when rebooting the machine, one needed to start the emulator again:
+If for some reason the TPM and IMA emulation aren't working correctly, you can
+restart those services with
 
-`/usr/local/bin/tpm_serverd`
-
-`systemctl restart tpm2-abrmd`
-
-Once the `tpm2-abrmd` service is running, start the IMA component using the command:
-
-`keylime_ima_emulator`
+    systemctl restart tpm_emulator
+    systemctl restart ima_emulator
 
 ## Access to Keylime components from the host
 

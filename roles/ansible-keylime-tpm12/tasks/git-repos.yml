@@ -1,9 +1,0 @@
-- name: Clone keylime
-  git:
-    repo: https://github.com/keylime/keylime
-    dest: /root/keylime
-
-- name: Clone tpm4720-keylime
-  git:
-    repo: https://github.com/keylime/tpm4720-keylime
-    dest: /root/tpm4720-keylime
