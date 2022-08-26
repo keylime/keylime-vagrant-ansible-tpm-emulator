@@ -102,6 +102,8 @@ Note: you will most likely need to export the right TPM2TOOLS_TCTI environment
 variable before being able to successfully start keylime_agent. To do so:
 `export TPM2TOOLS_TCTI="mssim:port=2321"`
 
+A full, step-by-step guide for provisioning a Keylime development setup on Fedora can be found [here](docs/vagrant-setup-guide-fedora.md).
+
 ### Upgrading VMs
 
 If you just want to upgrade Keylime within your VM(s), running the following as
