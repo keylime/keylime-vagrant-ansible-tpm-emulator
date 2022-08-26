@@ -284,13 +284,70 @@ Run keylime_ca
 [root@keylime-fedora ~]# keylime_ca -c listen -d /root/myca
 ```
 
+
+## Using multiple Vagrant instances together
+
+The Keylime vagrantfile is already set up to easily provision multiple instances of the same VM if desired, and that’s what will be used here.
+
+### Open ports
+
+Before provisioning, some small changes must be made to the Vagrantfile to open up the necessary ports for Keylime's components to talk to each other across VMs. Open up the Vagrantfile and find the section with this comment:
+
+```
+# Uncomment the following to forward ports on the VM and
+# allow access to Keylime components from the host machine.
+```
+
+Uncomment all the ports listed below that comment (for example, `#keylime.vm.network "forwarded_port", guest: 8881, host: "8881"` and similar).
+
+### Provision VMs
+
+Next, provision VMs using `vagrant up --provider libvirt --provision`. If using a `vagrant_variables.yml` file, change `instances` to 2 (or however many are desired). If using command-line options, use `--instances=2`. This step will take some time.
+
+Once up, SSH into both VMs in separate terminals using `vagrant ssh`. Unlike with a single Vagrant box, you’ll need to provide the hostname for each. Fortunately, they are named pretty intuitively - hostnames are assigned according to the pattern `keylime-fedora#`. For example, when provisioning two VMs, their hostnames should be `keylime-fedora1` and `keylime-fedora2`. Just append them to the end of the SSH command like so: `vagrant ssh keylime-fedora1`.
+
+Once logged on as root, install Keylime as normal on both boxes (see #Build Keylime for details).
+
+### Update keylime.conf with correct IPs
+
+At this point, both VMs should have a config file present at `/etc/keylime.conf`. Both need to be updated with the appropriate IP addresses of the different VMs running. To find the IP addresses, run `hostname -I` on both and note which is which.
+
+Next, open `/etc/keylime.conf` in your text editor of choice, find all config options for IP addresses, and change them to match the machines that will be running each Keylime component. For example: say VM #1 has IP 1.1.1.1 and will run the tenant, verifier, and registrar, and VM #2 has IP 2.2.2.2 and will run the agent. Update all config options for `verifier_ip`, `registrar_ip`, and similar with `1.1.1.1` and all config options for `cloud_agent_ip` and similar with `2.2.2.2`. Do this for the config file on both VMs.
+
+### Sharing certificates to all VMs
+
+Finally, the Keylime CA certificate must be identical on all systems in order for mTLS to work. To create a new CA certificate, start `keylime_verifier` on its intended machine; once set up, there should be a certificate present at `/var/lib/keylime/cv_ca.cacert.crt`. This file needs to make its way to the same path on all other VMs.
+
+There are several ways to move the file over, but `scp` is the simplest. The non-root `vagrant` user has a default password of `vagrant`, so this command should work:
+
+```shell
+scp /var/lib/keylime/cv_ca/cacert.crt vagrant @<ip address of the other machine>:~
+```
+
+Accept the fingerprint and enter the password `vagrant` when prompted.
+
+At this point, the second machine should have the certificate in the `vagrant` home directory at `/home/vagrant/cacert.crt`. The destination directory won’t yet exist, so create it and move the certificate:
+
+```shell
+[keylime-fedora2]# mkdir /var/lib/keylime
+[keylime-fedora2]# mkdir /ver/lib/keylime/cv_ca
+[keylime-fedora2]# mv /home/vagrant/cacert.crt /var/lib/keylime/cv_ca/cacert.crt
+```
+
+At this point, things should work! Start up `keylime_registrar` and, finally, `keylime_agent`. If everything worked, the agent should register as normal and commands can be issued to the verifier.
+
+
 ## Troubleshooting
 
 Here are some solutions to possible errors bringing the Vagrant box up encountered on a clean Fedora 36 install.
 
+### `virbr0`: no such device
+
+Error message:
+
 ```shell
 ==> keylime-fedora1: Creating shared folders metadata…
-==> keylime-fedora1: Starting domain. /usr/share/gems/gems/fog-libvirt-0.8.0/lib/fog/libvirt/requests/compute/vm_action.rb:7:in `create': Call to virDomainCreateWithFlags failed: internal error: /usr/libexec/qemu-bridge-helper --use-vnet --br=virbr0 --fd=29: failed to communicate with bridge helper: Transport endpoint is not connected (Libvirt::Error) stderr=failed to get mtu of bridge `virbr0': No such device
+==> keylime-fedora1: Starting domain. /usr/share/gems/gems/fog-libvirt-0.8.0/lib/fog/libvirt/requests/compute/vm_action.rb:7:in 'create': Call to virDomainCreateWithFlags failed: internal error: /usr/libexec/qemu-bridge-helper --use-vnet --br=virbr0 --fd=29: failed to communicate with bridge helper: Transport endpoint is not connected (Libvirt::Error) stderr=failed to get mtu of bridge 'virbr0': No such device
 ```
 
 This error might have come up because of an incomplete installation of libvirt. Check your firewall zones with this command:
@@ -315,6 +372,8 @@ You should see a zone for libvirt present (like above); if not, that’s likely 
 
 Check firewall zones again. If the libvirt zone is present, the issue should be fixed.
 
+### Call to `virConnectListAllNetworks` failed
+
 ```shell
 /usr/share/vagrant/gems/gems/vagrant-libvirt-0.7.0/lib/vagrant-libvirt/driver.rb:158:in 'list_all_networks': Call to virConnectListAllNetworks failed: Failed to connect socket to '/var/run/libvirt/virtnetworkd-sock-ro': No such file or directory (Libvirt::RetrieveError)
 ```
@@ -331,41 +390,3 @@ If disabled and inactive, try enabling and starting it, then trying again.
 [localhost ~]$ sudo systemctl enable virtnetworkd
 [localhost ~]$ sudo systemctl start virtnetworkd
 ```
-
-## Using multiple Vagrant instances together
-
-The Keylime vagrantfile is already set up to easily provision multiple instances of the same VM if desired, and that’s what will be used here.
-
-Before doing anything, open up the Vagrantfile and uncomment the lines with forwarded ports from here and below: https://github.com/keylime/keylime-vagrant-ansible-tpm-emulator/blob/master/Vagrantfile#L65
-
-These will be necessary for Keylime’s components to talk to each other across VMs.
-
-Next, provision VMs using `vagrant up --provider libvirt --provision`. If using a `vagrant_variables.yml` file, change `instances` to 2 (or however many are desired). If using command-line options, use `--instances=2`. This step will take some time.
-
-Once up, SSH into both VMs in separate terminals using `vagrant ssh`. Unlike with a single Vagrant box, you’ll need to provide the hostname for each. Fortunately, they are named pretty intuitively - hostnames are assigned according to the pattern `keylime-fedora#`. For example, when provisioning two VMs, their hostnames should be `keylime-fedora1` and `keylime-fedora2`. Just append them to the end of the SSH command like so: `vagrant ssh keylime-fedora1`.
-
-Once logged on as root, install Keylime as normal on both boxes (see #Build Keylime for details).
-
-At this point, both VMs should have a config file present at `/etc/keylime.conf`. Both need to be updated with the appropriate IP addresses of the different VMs running. To find the IP addresses, run `hostname -I` on both and note which is which.
-
-Next, open `/etc/keylime.conf` in your text editor of choice, find all config options for IP addresses, and change them to match the machines that will be running each Keylime component. For example: say VM #1 has IP 1.1.1.1 and will run the tenant, verifier, and registrar, and VM #2 has IP 2.2.2.2 and will run the agent. Update all config options for `verifier_ip`, `registrar_ip`, and similar with `1.1.1.1` and all config options for `cloud_agent_ip` and similar with `2.2.2.2`. Do this for the config file on both VMs.
-
-Finally, the Keylime CA certificate must be identical on both systems in order for mTLS to work. To create a new CA certificate, start `keylime_verifier` on its intended machine; once set up, there should be a certificate present at `/var/lib/keylime/cv_ca.cacert.crt`. This file needs to make its way to the same path on all other VMs.
-
-There are several ways to move the file over, but `scp` is the simplest. The non-root `vagrant` user has a default password of `vagrant`, so this command should work:
-
-```shell
-scp /var/lib/keylime/cv_ca/cacert.crt vagrant @<ip address of the other machine>:~
-```
-
-Accept the fingerprint and enter the password `vagrant` when prompted.
-
-At this point, the second machine should have the certificate in the `vagrant` home directory at `/home/vagrant/cacert.crt`. The destination directory won’t yet exist, so create it and move the certificate:
-
-```shell
-[keylime-fedora2]# mkdir /var/lib/keylime
-[keylime-fedora2]# mkdir /ver/lib/keylime/cv_ca
-[keylime-fedora2]# mv /home/vagrant/cacert.crt /var/lib/keylime/cv_ca/cacert.crt
-```
-
-At this point, things should work! Start up `keylime_registrar` and, finally, `keylime_agent`. If everything worked, the agent should register as normal and commands can be issued to the verifier.
