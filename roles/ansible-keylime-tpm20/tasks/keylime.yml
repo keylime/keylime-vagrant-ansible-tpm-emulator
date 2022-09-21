@@ -15,6 +15,31 @@
     mode: 0644
     remote_src: yes
 
+- name: Create /etc/keylime for new-format config files
+  ansible.builtin.file:
+    path: /etc/keylime
+    state: directory
+    mode: 0755
+
+- name: Convert keylime.conf to new config format
+  shell: "/usr/bin/python3 convert_config.py"
+  args:
+    chdir: /root/keylime/scripts
+
+- name: Copy converted config files to /etc/keylime
+  copy:
+    src: "/root/keylime/scripts/{{ item }}.conf"
+    dest: /etc/keylime
+    mode: 0644
+    remote_src: yes
+  loop:
+    - agent
+    - verifier
+    - tenant
+    - registrar
+    - ca
+    - logging
+
 - name: Change require_ek_cert to false.
   lineinfile:
     path: /etc/keylime.conf
