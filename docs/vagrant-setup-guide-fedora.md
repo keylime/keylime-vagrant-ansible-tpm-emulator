@@ -390,3 +390,15 @@ If disabled and inactive, try enabling and starting it, then trying again.
 [localhost ~]$ sudo systemctl enable virtnetworkd
 [localhost ~]$ sudo systemctl start virtnetworkd
 ```
+
+### `ima_emulator.service` fails on startup
+
+This is usually caused by the software TPM failing to initialize correctly. Restarting it and `ima_emulator.service` should fix the issue:
+
+```shell
+# Root shell
+[keylime-fedora1]# tpm2_startup -c
+[keylime-fedora1]# systemctl restart ima_emulator.service
+```
+
+Verify the fix worked as intended by running `tpm2_pcrread`. If a collection of ones and zeros appear, the issue should be resolved.
