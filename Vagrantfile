@@ -109,6 +109,7 @@ Vagrant.configure("2") do |config|
             end
         end
       end
+      keylime.vm.provision :shell, inline: "tpm2_startup -c && systemctl restart ima_emulator.service", run: "always"
     end
   end
 end
