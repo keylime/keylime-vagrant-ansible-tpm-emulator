@@ -310,18 +310,20 @@ Once logged on as root, install Keylime as normal on both boxes (see #Build Keyl
 
 ### Update keylime.conf with correct IPs
 
-At this point, both VMs should have a config file present at `/etc/keylime.conf`. Both need to be updated with the appropriate IP addresses of the different VMs running. To find the IP addresses, run `hostname -I` on both and note which is which.
+At this point, both VMs should have a set of config files present at `/etc/keylime/*.conf`. All need to be updated with the appropriate IP addresses of the different VMs running. To find the IP addresses, run `hostname -I` on both and note which is which.
 
-Next, open `/etc/keylime.conf` in your text editor of choice, find all config options for IP addresses, and change them to match the machines that will be running each Keylime component. For example: say VM #1 has IP 1.1.1.1 and will run the tenant, verifier, and registrar, and VM #2 has IP 2.2.2.2 and will run the agent. Update all config options for `verifier_ip`, `registrar_ip`, and similar with `1.1.1.1` and all config options for `cloud_agent_ip` and similar with `2.2.2.2`. Do this for the config file on both VMs.
+Next, on each VM, edit the dedicated config files corresponding to that machine's dedicated purpose in your text editor of choice. Find all config options for IP addresses and change them to match the machines that will be running each Keylime component. For example: say VM #1 has IP 1.1.1.1 and will run the tenant, verifier, and registrar, and VM #2 has IP 2.2.2.2 and will run the agent. Update all config options for `verifier_ip`, `registrar_ip`, and similar with `1.1.1.1` and all config options for `cloud_agent_ip` and similar with `2.2.2.2`. Do this for the config file on both VMs.
+
+Note that it may be necessary to edit other config files as well. For example, the registrar uses values stored in `agent.conf` to determine the agent IP, so it's necessary to update both `registrar.conf` and `agent.conf` on that machine.
 
 ### Sharing certificates to all VMs
 
-Finally, the Keylime CA certificate must be identical on all systems in order for mTLS to work. To create a new CA certificate, start `keylime_verifier` on its intended machine; once set up, there should be a certificate present at `/var/lib/keylime/cv_ca.cacert.crt`. This file needs to make its way to the same path on all other VMs.
+Finally, the Keylime CA certificate must be identical on all systems in order for mTLS to work. To create a new CA certificate, start `keylime_verifier` on its intended machine; once set up, there should be a certificate present at `/var/lib/keylime/cv_ca/cacert.crt`. This file needs to make its way to the same path on all other VMs.
 
 There are several ways to move the file over, but `scp` is the simplest. The non-root `vagrant` user has a default password of `vagrant`, so this command should work:
 
 ```shell
-scp /var/lib/keylime/cv_ca/cacert.crt vagrant @<ip address of the other machine>:~
+scp /var/lib/keylime/cv_ca/cacert.crt vagrant@<ip address of the other machine>:~
 ```
 
 Accept the fingerprint and enter the password `vagrant` when prompted.
@@ -330,7 +332,7 @@ At this point, the second machine should have the certificate in the `vagrant` h
 
 ```shell
 [keylime-fedora2]# mkdir /var/lib/keylime
-[keylime-fedora2]# mkdir /ver/lib/keylime/cv_ca
+[keylime-fedora2]# mkdir /var/lib/keylime/cv_ca
 [keylime-fedora2]# mv /home/vagrant/cacert.crt /var/lib/keylime/cv_ca/cacert.crt
 ```
 
