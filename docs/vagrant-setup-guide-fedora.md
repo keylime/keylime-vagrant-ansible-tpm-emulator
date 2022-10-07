@@ -151,6 +151,12 @@ The files and directories listed in this file will not be checked for integrity 
 /root/keylime-dev/*
 ```
 
+## (DEVELOPMENT ONLY) Disable `ekcert` checking
+
+By default, Keylime checks for an `ekcert` as part of the tenant running. While important in production, this often isn't necessary for development, so to get Keylime working easily it's possible to disable these checks by changing the Keylime tenant config file at `/etc/keylime/tenant.conf`.
+
+Look for `require_ek_cert`. By default, it should be `True`; for development purposes ONLY, set it to `False`.
+
 ## Start Keylime
 
 From your local machine, **open 4 terminals** to run and monitor 4 different processes (verifier, registrar, agent, tenant). After you open each terminal, run the following commands on each one:

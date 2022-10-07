@@ -15,6 +15,18 @@
     mode: 0644
     remote_src: yes
 
+- name: Change require_ek_cert to false.
+  lineinfile:
+    path: /etc/keylime.conf
+    regexp: '^require_ek_cert'
+    line: require_ek_cert = False
+
+- name: Change ca_implementation to openssl.
+  lineinfile:
+    path: /etc/keylime.conf
+    regexp: '^ca_implementation'
+    line: ca_implementation = openssl
+
 - name: Create /etc/keylime for new-format config files
   ansible.builtin.file:
     path: /etc/keylime
@@ -39,15 +51,3 @@
     - registrar
     - ca
     - logging
-
-- name: Change require_ek_cert to false.
-  lineinfile:
-    path: /etc/keylime.conf
-    regexp: '^require_ek_cert'
-    line: require_ek_cert = False
-
-- name: Change ca_implementation to openssl.
-  lineinfile:
-    path: /etc/keylime.conf
-    regexp: '^ca_implementation'
-    line: ca_implementation = openssl
