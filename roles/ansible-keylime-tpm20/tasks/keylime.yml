@@ -33,21 +33,20 @@
     state: directory
     mode: 0755
 
+- name: Create /usr/share/keylime for templates
+  ansible.builtin.file:
+    path: /usr/share/keylime
+    state: directory
+    mode: 0755
+
+- name: Copy templates to default location
+  copy:
+    src: /root/keylime/templates
+    dest: /usr/share/keylime
+    mode: 0755
+    remote_src: yes
+
 - name: Convert keylime.conf to new config format
   shell: "/usr/bin/python3 convert_config.py"
   args:
-    chdir: /root/keylime/scripts
-
-- name: Copy converted config files to /etc/keylime
-  copy:
-    src: "/root/keylime/scripts/{{ item }}.conf"
-    dest: /etc/keylime
-    mode: 0644
-    remote_src: yes
-  loop:
-    - agent
-    - verifier
-    - tenant
-    - registrar
-    - ca
-    - logging
+    chdir: /root/keylime/keylime/cmd
