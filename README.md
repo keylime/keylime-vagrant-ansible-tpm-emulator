@@ -95,7 +95,7 @@ keylime_registrar
 
 keylime_agent
 
-keylime_node
+keylime_tenant
 ```
 
 Note: you will most likely need to export the right TPM2TOOLS_TCTI environment
