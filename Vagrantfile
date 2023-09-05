@@ -7,6 +7,7 @@ require 'yaml'
 opts = GetoptLong.new(
   [ '--instances', GetoptLong::OPTIONAL_ARGUMENT ],
   [ '--repo', GetoptLong::OPTIONAL_ARGUMENT ],
+  [ '--agent-repo', GetoptLong::OPTIONAL_ARGUMENT ],
   [ '--cpus', GetoptLong::OPTIONAL_ARGUMENT ],
   [ '--memory', GetoptLong::OPTIONAL_ARGUMENT ],
   [ '--verbose', GetoptLong::NO_ARGUMENT ],
@@ -21,11 +22,12 @@ if File.exist?(config_file)
 end
 
 # Use defaults defined in vagrant variables file, otherwise set defaults.
-instances = settings['instances'] ? settings['instances'] : 1
-cpus      = settings['cpus']      ? settings['cpus']      : 2
-memory    = settings['memory']    ? settings['memory']    : 2048
-repo      = settings['repo']      ? settings['repo']      : ''
-verbose   = settings['verbose']   ? settings['verbose']   : false
+instances  = settings['instances']  ? settings['instances']  : 1
+cpus       = settings['cpus']       ? settings['cpus']       : 2
+memory     = settings['memory']     ? settings['memory']     : 2048
+repo       = settings['repo']       ? settings['repo']       : ''
+agent_repo = settings['agent-repo'] ? settings['agent-repo'] : ''
+verbose    = settings['verbose']    ? settings['verbose']    : false
 qualityoflife   = settings['qualityoflife']   ? settings['qualityoflife']   : false
 
 opts.ordering=(GetoptLong::REQUIRE_ORDER)
@@ -38,6 +40,8 @@ opts.each do |opt, arg|
       instances = arg.to_i
     when '--repo'
       repo = arg
+    when '--agent-repo'
+      agent_repo = arg
     when '--cpus'
       cpus = arg.to_i
     when '--memory'
@@ -77,8 +81,11 @@ Vagrant.configure("2") do |config|
         hostname = "keylime-fedora#{i}"
       end
       keylime.vm.hostname = "#{hostname}"
-      if defined? (repo)
+      if !repo.empty?
         keylime.vm.synced_folder "#{repo}", "/root/keylime-dev", type: "sshfs"
+      end
+      if !agent_repo.empty?
+        keylime.vm.synced_folder "#{agent_repo}", "/root/keylime-rust-dev", type: "sshfs"
       end
       keylime.vm.provider "virtualbox" do |v|
         v.memory = "#{memory}"
