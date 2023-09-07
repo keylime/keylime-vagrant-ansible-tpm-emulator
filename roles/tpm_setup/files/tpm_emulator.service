@@ -1,0 +1,11 @@
+[Unit]
+Description=IBM TPM emulator service for Keylime
+After=network.target
+
+[Service]
+Environment=TPM_PATH=/var/run/tpm0
+ExecStartPre=mkdir -p /var/run/tpm0 && chmod 700 /var/run/tpm0
+ExecStart=swtpm socket --tpmstate dir=/var/run/tpm0 --tpm2 --server type=tcp,port=2321 --ctrl type=tcp,port=2322 --flags not-need-init,startup-clear
+
+[Install]
+WantedBy=default.target

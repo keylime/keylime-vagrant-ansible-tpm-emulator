@@ -56,7 +56,7 @@ end
 Vagrant.configure("2") do |config|
   (1..instances).each do |i|
     config.vm.define "keylime-fedora#{i}" do |keylime|
-      keylime.vm.box = "fedora/35-cloud-base"
+      keylime.vm.box = "fedora/38-cloud-base"
       # Should you require machines to share a private network
       # Note, you will need to create the network first within
       # your provider (VirtualBox / Libvirt etc)
@@ -97,26 +97,44 @@ Vagrant.configure("2") do |config|
         vb.memory = "#{memory}"
         vb.cpus = "#{cpus}"
       end
+
+      # remove the last download of ansible-keylime role and
+      # download the latest ansible-keylime role from github
+      keylime.vm.provision "shell", inline: <<-SHELL
+        rm -rf /vagrant/roles/ansible-keylime
+        TMP_DIR="/tmp/keylime-vagrant-ansible-install"
+        mkdir -p ${TMP_DIR}
+        cd $TMP_DIR
+        curl -s -L https://github.com/keylime/ansible-keylime/tarball/master -o ansible-keylime.tar.gz
+        tar -zxf ansible-keylime.tar.gz
+        cd keylime-ansible-keylime-*
+        mv roles/ansible-keylime /vagrant/roles/
+      SHELL
+
       keylime.vm.provision "ansible_local" do |ansible|
-          ansible.verbose = "v"
           ansible.playbook = "playbook.yml"
           ansible.extra_vars = {
             ansible_python_interpreter:"/usr/bin/python3",
           }
           if defined? (verbose) and verbose == true
-            ansible.verbose = true
+            ansible.verbose = "vvv"
           end
       end
       if defined? (qualityoflife) and qualityoflife == true
         keylime.vm.provision "ansible_local" do |ansible|
-            ansible.verbose = "v"
             ansible.playbook = "quality_of_life.yml"
             if defined? (verbose) and verbose == true
-              ansible.verbose = true
+              ansible.verbose = "vvv"
             end
         end
       end
-      keylime.vm.provision :shell, inline: "tpm2_startup -c && systemctl restart ima_emulator.service", run: "always"
+
+      # reboot after provisioning since some setting changes require it
+      keylime.vm.provision :shell do |shell|
+          shell.privileged = true
+          shell.inline = 'echo rebooting'
+          shell.reboot = true
+      end
     end
   end
 end
