@@ -1,7 +1,0 @@
----
-# tasks file for opencit-ansible
-- include: packages.yml
-- include: git-repos.yml
-- include: keylime.yml
-- include: ima-policy.yml
-- include: ibm-tpm.yml

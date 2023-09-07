@@ -1,36 +1,18 @@
-- name: Create ibmtpm directory
-  file:
-    path: /root/ibmtpm
-    state: directory
-
-- name: Download and unarchive ibmtpm
-  unarchive:
-    src: http://sourceforge.net/projects/ibmswtpm2/files/ibmtpm1119.tar.gz
-    dest: /root/ibmtpm
-    remote_src: yes
-
-- name: Compile tpm emulator
-  make:
-      chdir: /root/ibmtpm/src/
-
-- name: Install tpm_server
-  copy:
-    remote_src: yes
-    src: /root/ibmtpm/src/tpm_server
-    dest: /usr/local/bin/tpm_server
-    mode: "0744"
+- name: Install SW TPM
+  yum:
+    name: swtpm
+    state: present
 
 - name: Set TPM2TOOLS_TCTI environment variable globally
   lineinfile:
     dest: /etc/environment
     state: present
     regexp: '^TPM2TOOLS_TCTI'
-    line: 'TPM2TOOLS_TCTI=mssim:port=2321'
+    line: 'TPM2TOOLS_TCTI=swtpm:port=2321'
 
 - name: Install TPM Emulator service
   copy:
-    remote_src: yes
-    src: /root/keylime/ima_stub_service/tpm_emulator.service
+    src: tpm_emulator.service
     dest: /etc/systemd/system/tpm_emulator.service
     mode: "0644"
 
@@ -42,10 +24,18 @@
     masked: no
     state: restarted
 
+- name: IMA config directory
+  file: path=/etc/ima state=directory
+
+- name: IMA demo policy
+  copy:
+    src: ima-policy
+    dest: /etc/ima/ima-policy
+    mode: 0644
+
 - name: Install IMA Emulator service
   copy:
-    remote_src: yes
-    src: /root/keylime/ima_stub_service/ima_emulator.service
+    src: ima_emulator.service
     dest: /etc/systemd/system/ima_emulator.service
     mode: "0644"
 

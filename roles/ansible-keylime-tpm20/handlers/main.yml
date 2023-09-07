@@ -1,6 +1,0 @@
----
-# handlers file for ansible-keylime
-#- name: restart apache
-#  command: service https restart
-#  args:
-#    warn: no

@@ -15,4 +15,7 @@
         name: libselinux-python3
         state: present
   roles:
-    - ansible-keylime-tpm20
+    # pulled from https://github.com/keylime/ansible-keylime/tree/master/roles/ansible-keylime during vagrant provisioning
+    - ansible-keylime
+    # local to this repo
+    - tpm_setup
