@@ -5,7 +5,7 @@ Requires=tpm_emulator.service
 
 [Service]
 Environment=TPM2TOOLS_TCTI="swtpm:port=2321"
-ExecStart=/usr/bin/bash -c "keylime_ima_emulator"
+ExecStart=/usr/bin/bash -c "keylime_ima_emulator --hash_algs sha256 --ima-hash-alg sha1"
 
 [Install]
 WantedBy=default.target
