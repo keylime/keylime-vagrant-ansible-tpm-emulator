@@ -104,9 +104,9 @@ This can also just be `vagrant reload` if you want to refresh things for some re
 <lots of hashes should return>
 ```
 
-If you look at the output most of the PCRs (platform configuration registers) will have values of lots of zeros. The main one that will be set is the SHA1 PCR-10 which is being populated by IMA and the IMA emulator which extends the PCR every time a file is accessed.
+If you look at the output most of the PCRs (platform configuration registers) will have values of lots of zeros. The main one that will be set is the SHA256 PCR-10 which is being populated by IMA and the IMA emulator which extends the PCR every time a file is accessed.
 
-The Keylime IMA emulator (this replicates IMA which cannot work in a VM as we are running the tpm as a software emulator so it's not early enough in the boot process for IMA to use it) should already be running as it’s a systemd service. But if SHA1 PCR-10 isn’t set you can restart the emulator:
+The Keylime IMA emulator (this replicates IMA which cannot work in a VM as we are running the tpm as a software emulator so it's not early enough in the boot process for IMA to use it) should already be running as it’s a systemd service. But if SHA256 PCR-10 isn’t set you can restart the emulator:
 
 ```shell
 # (if needed)
@@ -128,7 +128,7 @@ While still logged into your vagrant machine with ssh, change to your keylime re
 Set up an allowlist for the verifier to use to check Quotes from the agent. This may take some time.
 
 ```shell
-[root@keylime-fedora keylime-dev]# ./scripts/create_allowlist.sh -o ~/allowlist.txt -h sha256sum
+[root@keylime-fedora keylime-dev]# ./create_runtime_policy.sh -o allowlist.txt -a sha256sum
 ```
 
 ## Set up an excludes list
