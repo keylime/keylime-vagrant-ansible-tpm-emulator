@@ -1,6 +1,8 @@
 - name: Install SW TPM
   yum:
-    name: swtpm
+    name:
+      - swtpm
+      - swtpm-tools
     state: present
 
 - name: Set TPM2TOOLS_TCTI environment variable globally
@@ -8,7 +10,13 @@
     dest: /etc/environment
     state: present
     regexp: '^TPM2TOOLS_TCTI'
-    line: 'TPM2TOOLS_TCTI=swtpm:port=2321'
+    line: 'TPM2TOOLS_TCTI=device:/dev/tpm0'
+
+- name: Enable the vTPM proxy kernel module
+  modprobe:
+    name: tpm_vtpm_proxy
+    state: present
+    persistent: present
 
 - name: Install TPM Emulator service
   copy:
@@ -27,7 +35,7 @@
 - name: IMA config directory
   file: path=/etc/ima state=directory
 
-- name: IMA demo policy
+- name: IMA policy
   copy:
     src: ima-policy
     dest: /etc/ima/ima-policy
