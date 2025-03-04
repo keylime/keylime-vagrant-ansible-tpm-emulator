@@ -15,7 +15,7 @@ repo: '/path/to/keylime'
 
 # Location of your local Keylime Rust agent git repository to sync into the virtual
 # machine. This allows you to test your code within the VM.
-agent-repo: '/path/to/keylime-rust'
+agent-repo: '/path/to/rust-keylime'
 
 # Set verbosity during Ansible provisioning.
 verbose: false
