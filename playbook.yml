@@ -2,10 +2,6 @@
 - hosts: all
   become: true
   pre_tasks:
-    - name: Put SELinux in permissive mode, logging actions that would be blocked.
-      selinux:
-        policy: targeted
-        state: permissive
     - name: Ensure Python 3 is available
       dnf:
         name: python3
@@ -13,7 +9,11 @@
     - name: Install libselinux-python3
       dnf:
         name: libselinux-python3
-        state: present
+        state: present    
+    - name: Put SELinux in permissive mode, logging actions that would be blocked.
+      selinux:
+        policy: targeted
+        state: permissive
   roles:
     # pulled from https://github.com/keylime/ansible-keylime/tree/master/roles/ansible-keylime during vagrant provisioning
     - ansible-keylime

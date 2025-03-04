@@ -56,7 +56,7 @@ end
 Vagrant.configure("2") do |config|
   (1..instances).each do |i|
     config.vm.define "keylime-fedora#{i}" do |keylime|
-      keylime.vm.box = "fedora/38-cloud-base"
+      keylime.vm.box = "fedora/41-cloud-base"
       # Should you require machines to share a private network
       # Note, you will need to create the network first within
       # your provider (VirtualBox / Libvirt etc)
@@ -65,6 +65,7 @@ Vagrant.configure("2") do |config|
       # Uncomment the following to forward ports on the VM and
       # allow access to Keylime components from the host machine.
       keylime.vm.network "forwarded_port", guest: 443, host: "844#{i}"
+
       # Forward Cloud Verifier listen port:
       #keylime.vm.network "forwarded_port", guest: 8881, host: "8881"
       # Forward Cloud Verifier revocation port:
